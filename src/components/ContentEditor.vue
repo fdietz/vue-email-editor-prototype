@@ -3,7 +3,7 @@
     Content Editor
     <div v-for="block in content.blocks" :key="block.id" @click="$emit('selection-changed', block)" class="block">
       Block {{block.id}}
-      <div v-for="column in block.columns" :key="column.id" class="column">
+      <div v-for="column in block.columns" :key="column.id" @click.stop="$emit('selection-changed', column)" class="column">
         Column {{column.id}}
       </div>
     </div>
