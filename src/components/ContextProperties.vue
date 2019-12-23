@@ -1,7 +1,9 @@
 <template>
   <div class="context-properties">
     Context Properties
-    {{selectedObject}}
+    {{ selectedObject }}
+
+    <button @click="remove">Remove</button>
   </div>
 </template>
 
@@ -11,8 +13,13 @@ export default {
     selectedObject: {
       type: Object
     }
+  },
+  methods: {
+    remove() {
+      this.$emit("remove");
+    }
   }
-}
+};
 </script>
 
 <style>
