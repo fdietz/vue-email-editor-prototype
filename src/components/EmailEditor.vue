@@ -14,10 +14,14 @@
   </div>
 </template>
 
+
 <script>
 import ContentBrowser from "./ContentBrowser.vue";
 import ContentEditor from "./ContentEditor.vue";
 import ContextProperties from "./ContextProperties.vue";
+
+const DEFAULT_PADDING = 20;
+
 export default {
   components: {
     ContentBrowser,
@@ -35,46 +39,78 @@ export default {
           {
             id: 1,
             name: "block",
+            attrs: {
+              margin: 0,
+              padding: DEFAULT_PADDING
+            },
             children: [
               {
                 id: 1,
                 name: "column",
                 attrs: {
                   margin: 0,
-                  padding: 0
+                  padding: DEFAULT_PADDING
                 }
               },
               {
                 id: 2,
-                name: "column"
+                name: "column",
+                attrs: {
+                  margin: 0,
+                  padding: DEFAULT_PADDING
+                }
               },
               {
                 id: 3,
-                name: "column"
+                name: "column",
+                attrs: {
+                  margin: 0,
+                  padding: DEFAULT_PADDING
+                }
               }
             ]
           },
           {
             id: 2,
             name: "block",
+            attrs: {
+              margin: 0,
+              padding: DEFAULT_PADDING
+            },
             children: [
               {
                 id: 4,
-                name: "column"
+                name: "column",
+                attrs: {
+                  margin: 0,
+                  padding: DEFAULT_PADDING
+                }
               },
               {
                 id: 5,
-                name: "column"
+                name: "column",
+                attrs: {
+                  margin: 0,
+                  padding: DEFAULT_PADDING
+                }
               }
             ]
           },
           {
             id: 3,
             name: "block",
+            attrs: {
+              margin: 0,
+              padding: DEFAULT_PADDING
+            },
             children: [
               {
                 id: 6,
-                name: "column"
+                name: "column",
+                attrs: {
+                  margin: 0,
+                  padding: DEFAULT_PADDING
+                }
               }
             ]
           }
@@ -92,12 +128,22 @@ export default {
       let columns = [];
       for (var i = 0; i < count; i++) {
         columns.push({
-          id: i + 1
+          id: i + 1,
+          name: "column",
+          attrs: {
+            margin: 0,
+            padding: DEFAULT_PADDING
+          }
         });
       }
 
       this.content.children.push({
         id: this.nextBlockId,
+        name: "block",
+        attrs: {
+          margin: 0,
+          padding: 0
+        },
         children: columns
       });
     },

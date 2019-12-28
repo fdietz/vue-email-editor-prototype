@@ -13,16 +13,26 @@
       @click="handleSelectionChanged(block)"
       class="block"
     >
-      Block {{ block.id }}
-      <div class="block-children">
-        <div
-          v-for="column in block.children"
-          :key="column.id"
-          @click.stop="handleSelectionChanged(block, column)"
-          class="column"
-          :style="columnStyles(column)"
-        >
-          Column {{ column.id }}
+      <div class="border-wrapper">
+        <div class="border-label">
+          Block {{ block.id }}
+        </div>
+        <div class="block-children"  :style="blockStyles(block)">
+          <div
+            v-for="column in block.children"
+            :key="column.id"
+            @click.stop="handleSelectionChanged(block, column)"
+            class="column"
+          >
+            <div class="border-wrapper">
+              <div class="border-label">
+                Column {{ column.id }}
+              </div>
+              <div class="column-children" :style="columnStyles(column)">
+                abc
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -47,9 +57,16 @@ export default {
   },
   methods: {
     handleSelectionChanged(block, column) {
+      console.log(">", block, column)
       this.$emit("selection-changed", { block, column });
     },
     columnStyles({ attrs = {} }) {
+      return {
+        padding: `${attrs.padding}px`,
+        margin: `${attrs.margin}px`
+      };
+    },
+    blockStyles({ attrs = {} }) {
       return {
         padding: `${attrs.padding}px`,
         margin: `${attrs.margin}px`
@@ -65,8 +82,17 @@ export default {
 }
 
 .block {
-  border: 1px solid red;
-  padding: 2rem;
+  z-index: 1;
+
+  &:hover {
+    > .border-wrapper {
+      border-color: red;
+
+      > .border-label {
+        display: flex;
+      }
+    }
+  }
 
   .block-children {
     display: flex;
@@ -74,9 +100,54 @@ export default {
 }
 
 .column {
+  z-index: 2;
+
   display: flex;
   flex: 1 1;
   border: 1px solid violet;
-  padding: 1rem;
+
+  min-height: 50px;
+
+  &:hover {
+    > .border-wrapper {
+      border-color: red;
+
+      > .border-label {
+        display: flex;
+      }
+    }
+  }
+}
+
+.border-wrapper {
+  position: relative;
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
+
+  border-color: transparent;
+
+  z-index: 1;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    border: 2px solid transparent;
+    border-color: inherit;
+  }
+
+}
+.border-label {
+  display: none;
+  position: absolute;
+  top: -1rem;
+  left: 0;
+
+  font-size: 80%;
 }
 </style>

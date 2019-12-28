@@ -7,6 +7,12 @@
       <li>
         <a href="#" @click="addColumn(1)">1 Column</a>
       </li>
+      <li>
+        <a href="#" @click="addColumn(2)">2 Column</a>
+      </li>
+      <li>
+        <a href="#" @click="addColumn(3)">3 Column</a>
+      </li>
     </ul>
   </div>
 </template>

@@ -2,13 +2,13 @@
   <div class="context-properties">
     <h2>Context Properties</h2>
 
-    <div>{{ selectedObject.id }} {{ selectedObject.name }}</div>
+    <div v-if="selectedObject">{{ selectedObject.id }} {{ selectedObject.name }}</div>
 
     <div>
       <button @click="remove">Remove</button>
     </div>
 
-    <div>
+    <div v-if="selectedObject">
       <div v-for="(value, name) in selectedObject.attrs" :key="name">
         <label>{{ name }}</label>
         <input type="text" v-model="selectedObject.attrs[name]" />
