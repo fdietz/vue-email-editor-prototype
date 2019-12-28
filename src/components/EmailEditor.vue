@@ -3,8 +3,8 @@
     <ContentBrowser @add-column="addColumn" />
     <ContentEditor
       :content="content"
-      :block="selectedBlock"
-      :column="selectedColumn"
+      :current-block="selectedBlock"
+      :current-column="selectedColumn"
       @selection-changed="handleSelectionChanged"
     />
     <ContextProperties

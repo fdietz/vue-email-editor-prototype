@@ -2,8 +2,8 @@
   <div class="content-editor">
     <div>
       Breadcrumb:
-      <span v-if="block"> Block {{ block.id }} </span>
-      <span v-if="column"> / Column {{ column.id }} </span>
+      <span v-if="currentBlock"> Block {{ currentBlock.id }} </span>
+      <span v-if="currentColumn"> / Column {{ currentColumn.id }} </span>
     </div>
 
     Content Editor
@@ -12,17 +12,19 @@
       :key="block.id"
       @click="handleSelectionChanged(block)"
       class="block"
+      :class="{ selected: !currentColumn && currentBlock && currentBlock.id === block.id }"
     >
       <div class="border-wrapper">
         <div class="border-label">
           Block {{ block.id }}
         </div>
-        <div class="block-children"  :style="blockStyles(block)">
+        <div class="block-children" :style="blockStyles(block)">
           <div
             v-for="column in block.children"
             :key="column.id"
             @click.stop="handleSelectionChanged(block, column)"
             class="column"
+            :class="{ selected: currentColumn && currentBlock && currentColumn.id === column.id && currentBlock.id === block.id }"
           >
             <div class="border-wrapper">
               <div class="border-label">
@@ -42,10 +44,10 @@
 <script>
 export default {
   props: {
-    block: {
+    currentBlock: {
       type: Object
     },
-    column: {
+    currentColumn: {
       type: Object
     },
     content: {
@@ -71,6 +73,19 @@ export default {
         padding: `${attrs.padding}px`,
         margin: `${attrs.margin}px`
       };
+    },
+    isSelected(block, column) {
+      if (!this.currentBlock) return false;
+
+      if (block && this.currentBlock && column && this.currentColumn) {
+        console.log("a")
+        return block.id === this.currentBlock.id && column.id === this.currentColumn.id
+      } else if (block && this.currentBlock) {
+        console.log("b")
+        return block.id === this.currentBlock.id
+      }
+
+      return false;
     }
   }
 };
@@ -83,8 +98,10 @@ export default {
 
 .block {
   z-index: 1;
+  cursor: pointer;
 
-  &:hover {
+  &:hover,
+  &.selected {
     > .border-wrapper {
       border-color: red;
 
@@ -108,7 +125,10 @@ export default {
 
   min-height: 50px;
 
-  &:hover {
+  cursor: pointer;
+
+  &:hover,
+  &.selected {
     > .border-wrapper {
       border-color: red;
 
