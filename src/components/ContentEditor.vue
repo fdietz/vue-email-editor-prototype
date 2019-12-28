@@ -1,20 +1,29 @@
 <template>
   <div class="content-editor">
+    <div>
+      Breadcrumb:
+      <span v-if="block"> Block {{ block.id }} </span>
+      <span v-if="column"> / Column {{ column.id }} </span>
+    </div>
+
     Content Editor
     <div
-      v-for="block in content.blocks"
+      v-for="block in content.children"
       :key="block.id"
-      @click="$emit('selection-changed', block)"
+      @click="handleSelectionChanged(block)"
       class="block"
     >
       Block {{ block.id }}
-      <div
-        v-for="column in block.columns"
-        :key="column.id"
-        @click.stop="$emit('selection-changed', column)"
-        class="column"
-      >
-        Column {{ column.id }}
+      <div class="block-children">
+        <div
+          v-for="column in block.children"
+          :key="column.id"
+          @click.stop="handleSelectionChanged(block, column)"
+          class="column"
+          :style="columnStyles(column)"
+        >
+          Column {{ column.id }}
+        </div>
       </div>
     </div>
   </div>
@@ -23,12 +32,29 @@
 <script>
 export default {
   props: {
+    block: {
+      type: Object
+    },
+    column: {
+      type: Object
+    },
     content: {
       type: Object
     }
   },
   data() {
     return {};
+  },
+  methods: {
+    handleSelectionChanged(block, column) {
+      this.$emit("selection-changed", { block, column });
+    },
+    columnStyles({ attrs = {} }) {
+      return {
+        padding: `${attrs.padding}px`,
+        margin: `${attrs.margin}px`
+      };
+    }
   }
 };
 </script>
@@ -42,9 +68,15 @@ export default {
   border: 1px solid red;
   padding: 2rem;
 
-  .column {
-    border: 1px solid violet;
-    padding: 1rem;
+  .block-children {
+    display: flex;
   }
+}
+
+.column {
+  display: flex;
+  flex: 1 1;
+  border: 1px solid violet;
+  padding: 1rem;
 }
 </style>

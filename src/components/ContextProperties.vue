@@ -1,9 +1,19 @@
 <template>
   <div class="context-properties">
-    Context Properties
-    {{ selectedObject }}
+    <h2>Context Properties</h2>
 
-    <button @click="remove">Remove</button>
+    <div>{{ selectedObject.id }} {{ selectedObject.name }}</div>
+
+    <div>
+      <button @click="remove">Remove</button>
+    </div>
+
+    <div>
+      <div v-for="(value, name) in selectedObject.attrs" :key="name">
+        <label>{{ name }}</label>
+        <input type="text" v-model="selectedObject.attrs[name]" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -12,6 +22,11 @@ export default {
   props: {
     selectedObject: {
       type: Object
+    }
+  },
+  computed: {
+    attrs() {
+      return this.selectedObject.attrs;
     }
   },
   methods: {

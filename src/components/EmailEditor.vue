@@ -3,6 +3,8 @@
     <ContentBrowser @add-column="addColumn" />
     <ContentEditor
       :content="content"
+      :block="selectedBlock"
+      :column="selectedColumn"
       @selection-changed="handleSelectionChanged"
     />
     <ContextProperties
@@ -24,17 +26,23 @@ export default {
   },
   data() {
     return {
+      selectedBlock: null,
+      selectedColumn: null,
       selectedObject: null,
       selectedPath: [],
       content: {
-        blocks: [
+        children: [
           {
             id: 1,
             name: "block",
-            columns: [
+            children: [
               {
                 id: 1,
-                name: "column"
+                name: "column",
+                attrs: {
+                  margin: 0,
+                  padding: 0
+                }
               },
               {
                 id: 2,
@@ -49,9 +57,13 @@ export default {
           {
             id: 2,
             name: "block",
-            columns: [
+            children: [
               {
                 id: 4,
+                name: "column"
+              },
+              {
+                id: 5,
                 name: "column"
               }
             ]
@@ -59,9 +71,9 @@ export default {
           {
             id: 3,
             name: "block",
-            columns: [
+            children: [
               {
-                id: 5,
+                id: 6,
                 name: "column"
               }
             ]
@@ -72,7 +84,7 @@ export default {
   },
   computed: {
     nextBlockId() {
-      return this.content.blocks[this.content.blocks.length - 1].id + 1;
+      return this.content.children[this.content.children.length - 1].id + 1;
     }
   },
   methods: {
@@ -84,13 +96,21 @@ export default {
         });
       }
 
-      this.content.blocks.push({
+      this.content.children.push({
         id: this.nextBlockId,
-        columns
+        children: columns
       });
     },
-    handleSelectionChanged(obj) {
-      this.selectedObject = obj;
+    handleSelectionChanged({ block, column }) {
+      console.log("changed", block, column);
+      this.selectedBlock = block;
+      this.selectedColumn = column;
+
+      if (column) {
+        this.selectedObject = column;
+      } else if (block) {
+        this.selectedObject = block;
+      }
     },
     handleRemoveSelectedObject() {
       // this.selectedObject = null;
