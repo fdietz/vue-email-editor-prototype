@@ -7,12 +7,10 @@
       :current-column="selectedColumn"
       :current-element="selectedElement"
       @selection-changed="handleSelectionChanged"
+      @remove-block="handleRemoveBlock"
       @remove-element="handleRemoveElement"
     />
-    <ContextProperties
-      :selected-object="selectedObject"
-      @remove="handleRemoveSelectedObject"
-    />
+    <ContextProperties :selected-object="selectedObject" />
   </div>
 </template>
 
@@ -247,6 +245,15 @@ export default {
       const index = column.children.findIndex(child => child.id === element.id);
       if (index !== -1) {
         column.children.splice(index, 1);
+      }
+    },
+    handleRemoveBlock({ block }) {
+      console.log("remove block", block);
+      const index = this.content.children.findIndex(
+        child => child.id === block.id
+      );
+      if (index !== -1) {
+        this.content.children.splice(index, 1);
       }
     }
   }

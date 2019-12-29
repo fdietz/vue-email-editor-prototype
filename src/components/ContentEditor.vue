@@ -20,6 +20,14 @@
     >
       <div class="block-border-wrapper">
         <div class="border-label">Block {{ block.id }}</div>
+        <div class="action">
+          <b-button
+            variant="secondary"
+            size="sm"
+            @click.stop="removeBlock(block)"
+            >x</b-button
+          >
+        </div>
         <div class="block-children" :style="blockStyles(block)">
           <div
             v-for="column in block.children"
@@ -56,7 +64,7 @@
                       <b-button
                         variant="secondary"
                         size="sm"
-                        @click="removeElement(block, column, element)"
+                        @click.stop="removeElement(block, column, element)"
                         >x</b-button
                       >
                     </div>
@@ -112,6 +120,9 @@ export default {
     removeElement(block, column, element) {
       this.$emit("remove-element", { block, column, element });
     },
+    removeBlock(block) {
+      this.$emit("remove-block", { block });
+    },
     columnStyles({ attrs = {} }) {
       return {
         padding: `${attrs.padding}px`,
@@ -160,6 +171,10 @@ $column-border-color: $secondary;
       > .border-label {
         display: flex;
       }
+
+      > .action {
+        display: flex;
+      }
     }
   }
 
@@ -195,6 +210,16 @@ $column-border-color: $secondary;
     border-color: inherit;
     border-radius: 2px;
   }
+
+  .action {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+
+    display: none;
+
+    z-index: 2;
+  }
 }
 
 .column {
@@ -205,19 +230,6 @@ $column-border-color: $secondary;
   // border: 1px solid $column-border-color;
 
   min-height: 50px;
-
-  cursor: pointer;
-
-  // &:hover,
-  // &.selected {
-  //   .column-border-wrapper {
-  //     border-color: $column-border-color;
-
-  //     > .border-label {
-  //       display: flex;
-  //     }
-  //   }
-  // }
 
   .column-children {
   }
@@ -259,22 +271,7 @@ $column-border-color: $secondary;
   flex: 1 1;
   flex-direction: column;
 
-  border-color: transparent;
-
   z-index: 1;
-
-  &:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    border: 2px solid transparent;
-    border-color: inherit;
-    border-radius: 2px;
-  }
 }
 
 .element-border-wrapper {
