@@ -5,6 +5,7 @@
       :content="content"
       :current-block="selectedBlock"
       :current-column="selectedColumn"
+      :current-element="selectedElement"
       @selection-changed="handleSelectionChanged"
     />
     <ContextProperties
@@ -32,6 +33,15 @@ const buildDefaultColumnAttrs = () => ({
   alignSelf: "center"
 });
 
+// const buildDefaultElementAttrs = () => ({
+//   padding: DEFAULT_PADDING
+// });
+
+const buildDefaultElementTextAttrs = () => ({
+  padding: DEFAULT_PADDING,
+  content: "Lorem ipsum"
+});
+
 export default {
   components: {
     ContentBrowser,
@@ -42,6 +52,7 @@ export default {
     return {
       selectedBlock: null,
       selectedColumn: null,
+      selectedElement: null,
       selectedObject: null,
       selectedPath: [],
       content: {
@@ -54,17 +65,59 @@ export default {
               {
                 id: 1,
                 name: "column",
-                attrs: buildDefaultColumnAttrs()
+                attrs: buildDefaultColumnAttrs(),
+                children: [
+                  {
+                    id: 1,
+                    name: "element",
+                    type: "text",
+                    attrs: buildDefaultElementTextAttrs()
+                  },
+                  {
+                    id: 2,
+                    name: "element",
+                    type: "text",
+                    attrs: buildDefaultElementTextAttrs()
+                  }
+                ]
               },
               {
                 id: 2,
                 name: "column",
-                attrs: buildDefaultColumnAttrs()
+                attrs: buildDefaultColumnAttrs(),
+                children: [
+                  {
+                    id: 1,
+                    name: "element",
+                    type: "text",
+                    attrs: buildDefaultElementTextAttrs()
+                  },
+                  {
+                    id: 2,
+                    name: "element",
+                    type: "text",
+                    attrs: buildDefaultElementTextAttrs()
+                  }
+                ]
               },
               {
                 id: 3,
                 name: "column",
-                attrs: buildDefaultColumnAttrs()
+                attrs: buildDefaultColumnAttrs(),
+                children: [
+                  {
+                    id: 1,
+                    name: "element",
+                    type: "text",
+                    attrs: buildDefaultElementTextAttrs()
+                  },
+                  {
+                    id: 2,
+                    name: "element",
+                    type: "text",
+                    attrs: buildDefaultElementTextAttrs()
+                  }
+                ]
               }
             ]
           },
@@ -76,12 +129,28 @@ export default {
               {
                 id: 4,
                 name: "column",
-                attrs: buildDefaultColumnAttrs()
+                attrs: buildDefaultColumnAttrs(),
+                children: [
+                  {
+                    id: 1,
+                    name: "element",
+                    type: "text",
+                    attrs: buildDefaultElementTextAttrs()
+                  }
+                ]
               },
               {
                 id: 5,
                 name: "column",
-                attrs: buildDefaultColumnAttrs()
+                attrs: buildDefaultColumnAttrs(),
+                children: [
+                  {
+                    id: 1,
+                    name: "element",
+                    type: "text",
+                    attrs: buildDefaultElementTextAttrs()
+                  }
+                ]
               }
             ]
           },
@@ -93,7 +162,15 @@ export default {
               {
                 id: 6,
                 name: "column",
-                attrs: buildDefaultColumnAttrs()
+                attrs: buildDefaultColumnAttrs(),
+                children: [
+                  {
+                    id: 1,
+                    name: "element",
+                    type: "text",
+                    attrs: buildDefaultElementTextAttrs()
+                  }
+                ]
               }
             ]
           }
@@ -113,7 +190,15 @@ export default {
         columns.push({
           id: i + 1,
           name: "column",
-          attrs: buildDefaultColumnAttrs()
+          attrs: buildDefaultColumnAttrs(),
+          children: [
+            {
+              id: 1,
+              name: "element",
+              type: "text",
+              attrs: buildDefaultElementTextAttrs()
+            }
+          ]
         });
       }
 
@@ -124,11 +209,14 @@ export default {
         children: columns
       });
     },
-    handleSelectionChanged({ block, column }) {
+    handleSelectionChanged({ block, column, element }) {
       this.selectedBlock = block;
       this.selectedColumn = column;
+      this.selectedElement = element;
 
-      if (column) {
+      if (element) {
+        this.selectedObject = element;
+      } else if (column) {
         this.selectedObject = column;
       } else if (block) {
         this.selectedObject = block;

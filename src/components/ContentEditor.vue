@@ -6,6 +6,7 @@
       Breadcrumb:
       <span v-if="currentBlock"> Block {{ currentBlock.id }} </span>
       <span v-if="currentColumn"> / Column {{ currentColumn.id }} </span>
+      <span v-if="currentElement"> / Element {{ currentElement.id }} </span>
     </div>
 
     <div
@@ -27,6 +28,7 @@
             class="column"
             :class="{
               selected:
+                !currentElement &&
                 currentColumn &&
                 currentBlock &&
                 currentColumn.id === column.id &&
@@ -36,7 +38,29 @@
             <div class="column-border-wrapper">
               <div class="border-label">Column {{ column.id }}</div>
               <div class="column-children" :style="columnStyles(column)">
-                abc
+                <div
+                  v-for="element in column.children"
+                  :key="element.id"
+                  @click.stop="handleSelectionChanged(block, column, element)"
+                  class="element"
+                  :class="{
+                    selected:
+                      currentElement &&
+                      currentColumn &&
+                      currentBlock &&
+                      currentElement.id == element.id &&
+                      currentColumn.id === column.id &&
+                      currentBlock.id === block.id
+                  }"
+                >
+                  <div class="element-border-wrapper">
+                    <div class="border-label">Element {{ element.id }}</div>
+                    <div
+                      v-if="element.type == 'text'"
+                      v-html="element.attrs.content"
+                    ></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -55,6 +79,9 @@ export default {
     currentColumn: {
       type: Object
     },
+    currentElement: {
+      type: Object
+    },
     content: {
       type: Object
     }
@@ -63,8 +90,8 @@ export default {
     return {};
   },
   methods: {
-    handleSelectionChanged(block, column) {
-      this.$emit("selection-changed", { block, column });
+    handleSelectionChanged(block, column, element) {
+      this.$emit("selection-changed", { block, column, element });
     },
     columnStyles({ attrs = {} }) {
       return {
@@ -76,6 +103,11 @@ export default {
       return {
         padding: `${attrs.padding}px`,
         backgroundColor: `${attrs.backgroundColor || "#f5f5f5"}`
+      };
+    },
+    elementStyles({ attrs = {} }) {
+      return {
+        padding: `${attrs.padding}px`
       };
     }
   }
@@ -169,6 +201,32 @@ $column-border-color: $secondary;
   }
 }
 
+.element {
+  z-index: 3;
+
+  display: flex;
+  flex: 1 1;
+  // border: 1px solid $column-border-color;
+
+  min-height: 50px;
+
+  cursor: pointer;
+
+  &:hover,
+  &.selected {
+    .element-border-wrapper {
+      border-color: $column-border-color;
+
+      > .border-label {
+        display: flex;
+      }
+    }
+  }
+
+  .element-children {
+  }
+}
+
 .column-border-wrapper {
   position: relative;
   display: flex;
@@ -192,6 +250,31 @@ $column-border-color: $secondary;
     border-radius: 2px;
   }
 }
+
+.element-border-wrapper {
+  position: relative;
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
+
+  border-color: transparent;
+
+  z-index: 1;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    border: 2px solid transparent;
+    border-color: inherit;
+    border-radius: 2px;
+  }
+}
+
 .border-label {
   display: none;
   position: absolute;

@@ -30,6 +30,16 @@
         ></b-form-select>
       </b-form-group>
     </div>
+
+    <div v-if="selectedObject.name == 'element'">
+      <b-form-group label="Padding">
+        <b-form-input type="number" v-model="selectedObject.attrs.padding" />
+      </b-form-group>
+
+      <b-form-group v-if="selectedObject.type == 'text'" label="Content">
+        <b-form-textarea v-model="selectedObject.attrs.content" />
+      </b-form-group>
+    </div>
   </div>
 </template>
 
