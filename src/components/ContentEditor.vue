@@ -45,22 +45,20 @@
                   /></b-button>
                 </div>
               </div>
-              <div class="element-wrapper">
-                <div
-                  v-if="element.type == 'text'"
-                  v-html="element.attrs.textContent"
-                  class="element-text"
-                  :style="elementStyles(element)"
-                ></div>
-                <div
-                  v-if="element.type == 'button'"
-                  class="element-button"
-                  :style="elementStyles(element)"
-                >
-                  <b-button variant="primary">{{
-                    element.attrs.buttonText
-                  }}</b-button>
-                </div>
+              <div
+                v-if="element.type == 'text'"
+                v-html="element.attrs.textContent"
+                class="element-text"
+                :style="elementStyles(element)"
+              ></div>
+              <div
+                v-if="element.type == 'button'"
+                class="element-button"
+                :style="elementStyles(element)"
+              >
+                <b-button variant="primary">{{
+                  element.attrs.buttonText
+                }}</b-button>
               </div>
             </div>
           </div>
@@ -223,11 +221,8 @@ $column-border-color: $secondary;
   display: flex;
   flex: 1 1;
 
-  min-height: 50px;
-
   cursor: pointer;
 
-  // z-index: 2;
   &:hover,
   &.selected {
     > .border-wrapper {
@@ -236,7 +231,8 @@ $column-border-color: $secondary;
   }
 }
 
-.element-wrapper {
+.element-text,
+.element-button {
   display: block;
   width: 100%;
 }
