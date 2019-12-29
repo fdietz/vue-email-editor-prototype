@@ -6,7 +6,8 @@
       <span v-if="currentColumn"> / Column {{ currentColumn.id }} </span>
     </div>
 
-    Content Editor
+    <h2>Content Editor</h2>
+
     <div
       v-for="block in content.children"
       :key="block.id"
@@ -14,7 +15,7 @@
       class="block"
       :class="{ selected: !currentColumn && currentBlock && currentBlock.id === block.id }"
     >
-      <div class="border-wrapper">
+      <div class="block-border-wrapper">
         <div class="border-label">
           Block {{ block.id }}
         </div>
@@ -26,7 +27,7 @@
             class="column"
             :class="{ selected: currentColumn && currentBlock && currentColumn.id === column.id && currentBlock.id === block.id }"
           >
-            <div class="border-wrapper">
+            <div class="column-border-wrapper">
               <div class="border-label">
                 Column {{ column.id }}
               </div>
@@ -65,7 +66,8 @@ export default {
     columnStyles({ attrs = {} }) {
       return {
         padding: `${attrs.padding}px`,
-        margin: `${attrs.margin}px`
+        margin: `${attrs.margin}px`,
+        alignSelf: `${attrs.alignSelf || 'center'}`
       };
     },
     blockStyles({ attrs = {} }) {
@@ -92,18 +94,23 @@ export default {
 </script>
 
 <style lang="scss">
+$block-border-color: red;
+$column-border-color: green;
+
 .content-editor {
   border: 1px solid green;
 }
 
 .block {
+  display: flex;
+  flex-direction: column;
   z-index: 1;
   cursor: pointer;
 
   &:hover,
   &.selected {
-    > .border-wrapper {
-      border-color: red;
+    .block-border-wrapper {
+      border-color: $block-border-color;
 
       > .border-label {
         display: flex;
@@ -113,6 +120,34 @@ export default {
 
   .block-children {
     display: flex;
+    width: 600px;
+    margin: 0px auto;
+
+    align-self: center;
+  }
+}
+
+.block-border-wrapper {
+  position: relative;
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
+  justify-content: center;
+
+  border-color: transparent;
+
+  z-index: 1;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    border: 2px solid transparent;
+    border-color: inherit;
   }
 }
 
@@ -121,7 +156,7 @@ export default {
 
   display: flex;
   flex: 1 1;
-  border: 1px solid violet;
+  // border: 1px solid $column-border-color;
 
   min-height: 50px;
 
@@ -129,17 +164,21 @@ export default {
 
   &:hover,
   &.selected {
-    > .border-wrapper {
-      border-color: red;
+    .column-border-wrapper {
+      border-color: $column-border-color;
 
       > .border-label {
         display: flex;
       }
     }
   }
+
+  .column-children {
+
+  }
 }
 
-.border-wrapper {
+.column-border-wrapper {
   position: relative;
   display: flex;
   flex: 1 1;
