@@ -22,7 +22,7 @@ import ContextProperties from "./ContextProperties.vue";
 const DEFAULT_PADDING = 20;
 const DEFAULT_COLOR = "#555";
 const DEFAULT_BACKGROUND_COLOR = "#fff";
-const DEFAULT_ELEMENT_BACKGROUND_COLOR = "#fff";
+const DEFAULT_ELEMENT_BACKGROUND_COLOR = "transparent";
 
 const buildDefaultBlockAttrs = () => ({
   padding: 20,

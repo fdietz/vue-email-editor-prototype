@@ -9,65 +9,65 @@
         selected: !currentColumn && currentBlock && currentBlock.id === block.id
       }"
     >
-      <div class="block-border-wrapper">
+      <div class="border-wrapper block-border-wrapper">
         <div class="border-label">Block {{ block.id }}</div>
-        <div class="action">
+        <div class="border-action">
           <b-button variant="naked" size="sm" @click.stop="removeBlock(block)"
             ><font-awesome-icon icon="times"
           /></b-button>
         </div>
-        <div class="block-children" :style="blockStyles(block)">
-          <div v-for="column in block.children" :key="column.id" class="column">
-            <div class="column-border-wrapper">
-              <div v-if="column.children.length > 0" class="column-children">
-                <div
-                  v-for="element in column.children"
-                  :key="element.id"
-                  @click.stop="handleSelectionChanged(block, column, element)"
-                  class="element"
-                  :class="{
-                    selected:
-                      currentElement &&
-                      currentColumn &&
-                      currentBlock &&
-                      currentElement.id == element.id &&
-                      currentColumn.id === column.id &&
-                      currentBlock.id === block.id
-                  }"
-                >
-                  <div class="element-border-wrapper">
-                    <div class="action">
-                      <b-button
-                        variant="naked"
-                        size="sm"
-                        @click.stop="removeElement(block, column, element)"
-                        ><font-awesome-icon icon="times"
-                      /></b-button>
-                    </div>
-                    <div
-                      v-if="element.type == 'text'"
-                      v-html="element.attrs.textContent"
-                      class="element-text"
-                      :style="elementStyles(element)"
-                    ></div>
-                    <div
-                      v-if="element.type == 'button'"
-                      class="element-button"
-                      :style="elementStyles(element)"
-                    >
-                      <b-button variant="primary">{{
-                        element.attrs.buttonText
-                      }}</b-button>
-                    </div>
-                  </div>
+      </div>
+      <div class="block-children" :style="blockStyles(block)">
+        <div v-for="column in block.children" :key="column.id" class="column">
+          <div v-if="column.children.length > 0" class="column-children">
+            <div
+              v-for="element in column.children"
+              :key="element.id"
+              @click.stop="handleSelectionChanged(block, column, element)"
+              class="element"
+              :class="{
+                selected:
+                  currentElement &&
+                  currentColumn &&
+                  currentBlock &&
+                  currentElement.id == element.id &&
+                  currentColumn.id === column.id &&
+                  currentBlock.id === block.id
+              }"
+            >
+              <div class="border-wrapper element-border-wrapper">
+                <div class="border-action">
+                  <b-button
+                    variant="naked"
+                    size="sm"
+                    @click.stop="removeElement(block, column, element)"
+                    ><font-awesome-icon icon="times"
+                  /></b-button>
                 </div>
               </div>
-              <div v-else class="column-children">
-                <div class="element">
-                  <div class="element-placeholder">
-                    Placeholder
-                  </div>
+              <div class="element-wrapper">
+                <div
+                  v-if="element.type == 'text'"
+                  v-html="element.attrs.textContent"
+                  class="element-text"
+                  :style="elementStyles(element)"
+                ></div>
+                <div
+                  v-if="element.type == 'button'"
+                  class="element-button"
+                  :style="elementStyles(element)"
+                >
+                  <b-button variant="primary">{{
+                    element.attrs.buttonText
+                  }}</b-button>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div v-else class="column-children">
+            <div class="element">
+              <div class="element-placeholder">
+                Placeholder
               </div>
             </div>
           </div>
@@ -143,23 +143,15 @@ $column-border-color: $secondary;
 }
 
 .block {
+  position: relative;
   display: flex;
   flex-direction: column;
-  // z-index: 1;
   cursor: pointer;
 
   &:hover,
   &.selected {
-    .block-border-wrapper {
-      border-color: $block-border-color;
-
-      > .border-label {
-        display: flex;
-      }
-
-      > .action {
-        display: flex;
-      }
+    > .border-wrapper {
+      display: flex;
     }
   }
 
@@ -167,36 +159,31 @@ $column-border-color: $secondary;
     display: flex;
     width: 600px;
     margin: 0px auto;
-
-    align-self: center;
   }
 }
 
-.block-border-wrapper {
-  position: relative;
-  display: flex;
-  flex: 1 1;
-  flex-direction: column;
-  justify-content: center;
+.border-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
-  border-color: transparent;
+  display: none;
 
-  z-index: 1;
+  border: 2px solid transparent;
+  border-color: inherit;
+  border-radius: 2px;
 
-  &:after {
-    content: "";
+  .border-label {
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: -1rem;
     left: 0;
-    right: 0;
 
-    border: 2px solid transparent;
-    border-color: inherit;
-    border-radius: 2px;
+    font-size: 80%;
   }
 
-  .action {
+  .border-action {
     position: absolute;
     top: 0px;
     right: 0px;
@@ -207,103 +194,51 @@ $column-border-color: $secondary;
   }
 }
 
-.column {
-  // z-index: 2;
+.block-border-wrapper {
+  border-color: $block-border-color;
+  // z-index: 1;
+}
 
+.element-border-wrapper {
+  border-color: $column-border-color;
+  // z-index: 2;
+}
+
+.column {
   display: flex;
   flex: 1 1;
-  // border: 1px solid $column-border-color;
 
   min-height: 50px;
 
   .column-children {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1;
   }
 }
 
 .element {
-  // z-index: 3;
+  position: relative;
 
   display: flex;
   flex: 1 1;
-  // border: 1px solid $column-border-color;
 
   min-height: 50px;
 
   cursor: pointer;
 
+  // z-index: 2;
   &:hover,
   &.selected {
-    .element-border-wrapper {
-      border-color: $column-border-color;
-
-      > .border-label {
-        display: flex;
-      }
-
-      > .action {
-        display: flex;
-      }
+    > .border-wrapper {
+      display: flex;
     }
   }
-
-  .element-children {
-  }
 }
 
-.column-border-wrapper {
-  position: relative;
-  display: flex;
-  flex: 1 1;
-  flex-direction: column;
-
-  z-index: 1;
-}
-
-.element-border-wrapper {
-  position: relative;
-  display: flex;
-  flex: 1 1;
-  flex-direction: column;
-
-  border-color: transparent;
-
-  z-index: 1;
-
-  &:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    border: 2px solid transparent;
-    border-color: inherit;
-    border-radius: 2px;
-  }
-
-  .action {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-
-    display: none;
-
-    z-index: 2;
-  }
-}
-
-.border-label {
-  display: none;
-  position: absolute;
-  top: -1rem;
-  left: 0;
-
-  font-size: 80%;
-}
-
-.breadcrumb {
-  margin-bottom: 2rem;
+.element-wrapper {
+  display: block;
+  width: 100%;
 }
 
 .element-text {
