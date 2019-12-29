@@ -17,19 +17,7 @@
           /></b-button>
         </div>
         <div class="block-children" :style="blockStyles(block)">
-          <div
-            v-for="column in block.children"
-            :key="column.id"
-            class="column"
-            :class="{
-              selected:
-                !currentElement &&
-                currentColumn &&
-                currentBlock &&
-                currentColumn.id === column.id &&
-                currentBlock.id === block.id
-            }"
-          >
+          <div v-for="column in block.children" :key="column.id" class="column">
             <div class="column-border-wrapper">
               <div v-if="column.children.length > 0" class="column-children">
                 <div

@@ -154,6 +154,9 @@ export default {
   },
   watch: {
     value(newValue) {
+      if (newValue === this.editor.getHTML()) {
+        return;
+      }
       this.editor.setContent(newValue);
     }
   },
