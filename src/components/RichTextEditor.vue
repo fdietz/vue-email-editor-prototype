@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="text-editor">
     <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
       <div class="menubar">
         <b-button
@@ -101,7 +101,7 @@
         </b-button>
       </div>
     </editor-menu-bar>
-    <editor-content :editor="editor"></editor-content>
+    <editor-content class="editor-content" :editor="editor"></editor-content>
   </div>
 </template>
 
@@ -163,4 +163,24 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.text-editor {
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+
+  .menubar {
+    margin: 1px;
+    background-color: #f8f9fa;
+  }
+
+  .editor-content {
+    padding: 1rem;
+  }
+}
+</style>
+
+<style>
+[contenteditable]:focus {
+  outline: 0px solid transparent;
+}
+</style>

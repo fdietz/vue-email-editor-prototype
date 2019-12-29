@@ -11,7 +11,6 @@
 
     <div v-if="selectedObject.name == 'element'">
       <b-form-group v-if="selectedObject.type == 'text'" label="Text Content">
-        <b-form-textarea v-model="selectedObject.attrs.textContent" />
         <RichTextEditor v-model="selectedObject.attrs.textContent" />
       </b-form-group>
 
