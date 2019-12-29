@@ -2,32 +2,54 @@
   <div class="context-properties">
     <h2>Context Properties</h2>
 
-    <div v-if="selectedObject">{{ selectedObject.id }} {{ selectedObject.name }}</div>
-
-    <div>
-      <button @click="remove">Remove</button>
+    <div v-if="selectedObject">
+      {{ selectedObject.id }} {{ selectedObject.name }}
     </div>
 
-    <div v-if="selectedObject">
-      <div v-for="(value, name) in selectedObject.attrs" :key="name">
-        <label>{{ name }}</label>
-        <input type="text" v-model="selectedObject.attrs[name]" />
-      </div>
+    <div>
+      <Button @click="remove">Remove</Button>
+    </div>
+
+    <div v-if="selectedObject.name == 'block'">
+      <b-form-group label="Padding">
+        <b-form-input type="number" v-model="selectedObject.attrs.padding" />
+      </b-form-group>
+    </div>
+
+    <div v-if="selectedObject.name == 'column'">
+      <b-form-group label="Padding">
+        <b-form-input type="number" v-model="selectedObject.attrs.padding" />
+      </b-form-group>
+      <b-form-group label="Alignment">
+        <b-form-select
+          v-model="selectedObject.attrs.alignSelf"
+          :options="alignSelfOptions"
+        ></b-form-select>
+      </b-form-group>
     </div>
   </div>
 </template>
 
 <script>
+import Button from "./Button.vue";
+
 export default {
+  components: {
+    Button
+  },
   props: {
     selectedObject: {
       type: Object
     }
   },
-  computed: {
-    attrs() {
-      return this.selectedObject.attrs;
-    }
+  data() {
+    return {
+      alignSelfOptions: [
+        { value: "flex-start", text: "Left" },
+        { value: "center", text: "Center" },
+        { value: "flex-end", text: "Right" }
+      ]
+    };
   },
   methods: {
     remove() {
@@ -39,6 +61,8 @@ export default {
 
 <style>
 .context-properties {
-  border: 1px solid pink;
+  border-left: 1px solid #e8e8ef;
+  margin-left: 1rem;
+  padding: 1rem;
 }
 </style>

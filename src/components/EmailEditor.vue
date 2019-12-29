@@ -14,7 +14,6 @@
   </div>
 </template>
 
-
 <script>
 import ContentBrowser from "./ContentBrowser.vue";
 import ContentEditor from "./ContentEditor.vue";
@@ -40,7 +39,6 @@ export default {
             id: 1,
             name: "block",
             attrs: {
-              margin: 0,
               padding: DEFAULT_PADDING
             },
             children: [
@@ -48,7 +46,6 @@ export default {
                 id: 1,
                 name: "column",
                 attrs: {
-                  margin: 0,
                   padding: DEFAULT_PADDING
                 }
               },
@@ -56,7 +53,6 @@ export default {
                 id: 2,
                 name: "column",
                 attrs: {
-                  margin: 0,
                   padding: DEFAULT_PADDING
                 }
               },
@@ -64,7 +60,6 @@ export default {
                 id: 3,
                 name: "column",
                 attrs: {
-                  margin: 0,
                   padding: DEFAULT_PADDING
                 }
               }
@@ -74,7 +69,6 @@ export default {
             id: 2,
             name: "block",
             attrs: {
-              margin: 0,
               padding: DEFAULT_PADDING
             },
             children: [
@@ -82,7 +76,6 @@ export default {
                 id: 4,
                 name: "column",
                 attrs: {
-                  margin: 0,
                   padding: DEFAULT_PADDING
                 }
               },
@@ -90,7 +83,6 @@ export default {
                 id: 5,
                 name: "column",
                 attrs: {
-                  margin: 0,
                   padding: DEFAULT_PADDING
                 }
               }
@@ -100,7 +92,6 @@ export default {
             id: 3,
             name: "block",
             attrs: {
-              margin: 0,
               padding: DEFAULT_PADDING
             },
             children: [
@@ -108,7 +99,6 @@ export default {
                 id: 6,
                 name: "column",
                 attrs: {
-                  margin: 0,
                   padding: DEFAULT_PADDING
                 }
               }
@@ -131,7 +121,6 @@ export default {
           id: i + 1,
           name: "column",
           attrs: {
-            margin: 0,
             padding: DEFAULT_PADDING
           }
         });
@@ -141,14 +130,12 @@ export default {
         id: this.nextBlockId,
         name: "block",
         attrs: {
-          margin: 0,
-          padding: 0
+          padding: DEFAULT_PADDING
         },
         children: columns
       });
     },
     handleSelectionChanged({ block, column }) {
-      console.log("changed", block, column);
       this.selectedBlock = block;
       this.selectedColumn = column;
 
@@ -180,5 +167,6 @@ export default {
   display: grid;
   grid-template-columns: 25% auto 25%;
   grid-template-rows: auto;
+  padding-top: 65px;
 }
 </style>

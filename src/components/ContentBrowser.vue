@@ -1,6 +1,6 @@
 <template>
   <div class="content-browser">
-    Content Browser
+    <h2>Content Browser</h2>
 
     <h3>Layouts</h3>
     <ul>
@@ -29,6 +29,7 @@ export default {
 
 <style>
 .content-browser {
-  border: 1px solid red;
+  border-right: 1px solid #e8e8ef;
+  padding: 1rem;
 }
 </style>

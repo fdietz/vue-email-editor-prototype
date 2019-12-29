@@ -1,36 +1,40 @@
 <template>
   <div class="content-editor">
-    <div>
+    <h2>Content Editor</h2>
+
+    <div class="breadcrumb">
       Breadcrumb:
       <span v-if="currentBlock"> Block {{ currentBlock.id }} </span>
       <span v-if="currentColumn"> / Column {{ currentColumn.id }} </span>
     </div>
-
-    <h2>Content Editor</h2>
 
     <div
       v-for="block in content.children"
       :key="block.id"
       @click="handleSelectionChanged(block)"
       class="block"
-      :class="{ selected: !currentColumn && currentBlock && currentBlock.id === block.id }"
+      :class="{
+        selected: !currentColumn && currentBlock && currentBlock.id === block.id
+      }"
     >
       <div class="block-border-wrapper">
-        <div class="border-label">
-          Block {{ block.id }}
-        </div>
+        <div class="border-label">Block {{ block.id }}</div>
         <div class="block-children" :style="blockStyles(block)">
           <div
             v-for="column in block.children"
             :key="column.id"
             @click.stop="handleSelectionChanged(block, column)"
             class="column"
-            :class="{ selected: currentColumn && currentBlock && currentColumn.id === column.id && currentBlock.id === block.id }"
+            :class="{
+              selected:
+                currentColumn &&
+                currentBlock &&
+                currentColumn.id === column.id &&
+                currentBlock.id === block.id
+            }"
           >
             <div class="column-border-wrapper">
-              <div class="border-label">
-                Column {{ column.id }}
-              </div>
+              <div class="border-label">Column {{ column.id }}</div>
               <div class="column-children" :style="columnStyles(column)">
                 abc
               </div>
@@ -60,34 +64,18 @@ export default {
   },
   methods: {
     handleSelectionChanged(block, column) {
-      console.log(">", block, column)
       this.$emit("selection-changed", { block, column });
     },
     columnStyles({ attrs = {} }) {
       return {
         padding: `${attrs.padding}px`,
-        margin: `${attrs.margin}px`,
-        alignSelf: `${attrs.alignSelf || 'center'}`
+        alignSelf: `${attrs.alignSelf || "center"}`
       };
     },
     blockStyles({ attrs = {} }) {
       return {
-        padding: `${attrs.padding}px`,
-        margin: `${attrs.margin}px`
+        padding: `${attrs.padding}px`
       };
-    },
-    isSelected(block, column) {
-      if (!this.currentBlock) return false;
-
-      if (block && this.currentBlock && column && this.currentColumn) {
-        console.log("a")
-        return block.id === this.currentBlock.id && column.id === this.currentColumn.id
-      } else if (block && this.currentBlock) {
-        console.log("b")
-        return block.id === this.currentBlock.id
-      }
-
-      return false;
     }
   }
 };
@@ -98,7 +86,7 @@ $block-border-color: red;
 $column-border-color: green;
 
 .content-editor {
-  border: 1px solid green;
+  padding: 1rem;
 }
 
 .block {
@@ -174,7 +162,6 @@ $column-border-color: green;
   }
 
   .column-children {
-
   }
 }
 
@@ -199,7 +186,6 @@ $column-border-color: green;
     border: 2px solid transparent;
     border-color: inherit;
   }
-
 }
 .border-label {
   display: none;
@@ -208,5 +194,9 @@ $column-border-color: green;
   left: 0;
 
   font-size: 80%;
+}
+
+.breadcrumb {
+  margin-bottom: 2rem;
 }
 </style>
