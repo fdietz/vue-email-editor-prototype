@@ -14,6 +14,9 @@
       <b-form-group label="Padding">
         <b-form-input type="number" v-model="selectedObject.attrs.padding" />
       </b-form-group>
+      <b-form-group label="Background Color">
+        <b-form-input v-model="selectedObject.attrs.backgroundColor" />
+      </b-form-group>
     </div>
 
     <div v-if="selectedObject.name == 'column'">

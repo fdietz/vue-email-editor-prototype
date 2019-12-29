@@ -74,7 +74,8 @@ export default {
     },
     blockStyles({ attrs = {} }) {
       return {
-        padding: `${attrs.padding}px`
+        padding: `${attrs.padding}px`,
+        backgroundColor: `${attrs.backgroundColor || "#f5f5f5"}`
       };
     }
   }
@@ -82,8 +83,10 @@ export default {
 </script>
 
 <style lang="scss">
-$block-border-color: red;
-$column-border-color: green;
+@import "../styles/variables.scss";
+
+$block-border-color: $primary;
+$column-border-color: $secondary;
 
 .content-editor {
   padding: 1rem;
@@ -136,6 +139,7 @@ $column-border-color: green;
 
     border: 2px solid transparent;
     border-color: inherit;
+    border-radius: 2px;
   }
 }
 
@@ -185,6 +189,7 @@ $column-border-color: green;
 
     border: 2px solid transparent;
     border-color: inherit;
+    border-radius: 2px;
   }
 }
 .border-label {

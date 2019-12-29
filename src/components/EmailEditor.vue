@@ -20,6 +20,17 @@ import ContentEditor from "./ContentEditor.vue";
 import ContextProperties from "./ContextProperties.vue";
 
 const DEFAULT_PADDING = 20;
+const DEFAULT_BACKGROUND_COLOR = "#f5f5f5";
+
+const buildDefaultBlockAttrs = () => ({
+  padding: DEFAULT_PADDING,
+  backgroundColor: DEFAULT_BACKGROUND_COLOR
+});
+
+const buildDefaultColumnAttrs = () => ({
+  padding: DEFAULT_PADDING,
+  alignSelf: "center"
+});
 
 export default {
   components: {
@@ -38,69 +49,51 @@ export default {
           {
             id: 1,
             name: "block",
-            attrs: {
-              padding: DEFAULT_PADDING
-            },
+            attrs: buildDefaultBlockAttrs(),
             children: [
               {
                 id: 1,
                 name: "column",
-                attrs: {
-                  padding: DEFAULT_PADDING
-                }
+                attrs: buildDefaultColumnAttrs()
               },
               {
                 id: 2,
                 name: "column",
-                attrs: {
-                  padding: DEFAULT_PADDING
-                }
+                attrs: buildDefaultColumnAttrs()
               },
               {
                 id: 3,
                 name: "column",
-                attrs: {
-                  padding: DEFAULT_PADDING
-                }
+                attrs: buildDefaultColumnAttrs()
               }
             ]
           },
           {
             id: 2,
             name: "block",
-            attrs: {
-              padding: DEFAULT_PADDING
-            },
+            attrs: buildDefaultBlockAttrs(),
             children: [
               {
                 id: 4,
                 name: "column",
-                attrs: {
-                  padding: DEFAULT_PADDING
-                }
+                attrs: buildDefaultColumnAttrs()
               },
               {
                 id: 5,
                 name: "column",
-                attrs: {
-                  padding: DEFAULT_PADDING
-                }
+                attrs: buildDefaultColumnAttrs()
               }
             ]
           },
           {
             id: 3,
             name: "block",
-            attrs: {
-              padding: DEFAULT_PADDING
-            },
+            attrs: buildDefaultBlockAttrs(),
             children: [
               {
                 id: 6,
                 name: "column",
-                attrs: {
-                  padding: DEFAULT_PADDING
-                }
+                attrs: buildDefaultColumnAttrs()
               }
             ]
           }
@@ -120,18 +113,14 @@ export default {
         columns.push({
           id: i + 1,
           name: "column",
-          attrs: {
-            padding: DEFAULT_PADDING
-          }
+          attrs: buildDefaultColumnAttrs()
         });
       }
 
       this.content.children.push({
         id: this.nextBlockId,
         name: "block",
-        attrs: {
-          padding: DEFAULT_PADDING
-        },
+        attrs: buildDefaultBlockAttrs(),
         children: columns
       });
     },
