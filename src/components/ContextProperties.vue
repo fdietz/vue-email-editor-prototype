@@ -6,10 +6,6 @@
       {{ selectedObject.id }} {{ selectedObject.name }}
     </div>
 
-    <div>
-      <Button @click="remove">Remove</Button>
-    </div>
-
     <div v-if="selectedObject.name == 'block'">
       <b-form-group label="Padding">
         <b-form-input type="number" v-model="selectedObject.attrs.padding" />
@@ -63,12 +59,7 @@
 </template>
 
 <script>
-import Button from "./Button.vue";
-
 export default {
-  components: {
-    Button
-  },
   props: {
     selectedObject: {
       type: Object
@@ -87,11 +78,6 @@ export default {
         { value: "right", text: "Right" }
       ]
     };
-  },
-  methods: {
-    remove() {
-      this.$emit("remove");
-    }
   }
 };
 </script>

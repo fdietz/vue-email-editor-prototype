@@ -52,6 +52,14 @@
                   }"
                 >
                   <div class="element-border-wrapper">
+                    <div class="action">
+                      <b-button
+                        variant="secondary"
+                        size="sm"
+                        @click="removeElement(block, column, element)"
+                        >x</b-button
+                      >
+                    </div>
                     <div
                       v-if="element.type == 'text'"
                       v-html="element.attrs.textContent"
@@ -100,6 +108,9 @@ export default {
   methods: {
     handleSelectionChanged(block, column, element) {
       this.$emit("selection-changed", { block, column, element });
+    },
+    removeElement(block, column, element) {
+      this.$emit("remove-element", { block, column, element });
     },
     columnStyles({ attrs = {} }) {
       return {
@@ -231,6 +242,10 @@ $column-border-color: $secondary;
       > .border-label {
         display: flex;
       }
+
+      > .action {
+        display: flex;
+      }
     }
   }
 
@@ -283,6 +298,16 @@ $column-border-color: $secondary;
     border: 2px solid transparent;
     border-color: inherit;
     border-radius: 2px;
+  }
+
+  .action {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+
+    display: none;
+
+    z-index: 2;
   }
 }
 

@@ -7,6 +7,7 @@
       :current-column="selectedColumn"
       :current-element="selectedElement"
       @selection-changed="handleSelectionChanged"
+      @remove-element="handleRemoveElement"
     />
     <ContextProperties
       :selected-object="selectedObject"
@@ -82,12 +83,6 @@ export default {
                 children: [
                   {
                     id: 1,
-                    name: "element",
-                    type: "text",
-                    attrs: buildDefaultElementTextAttrs()
-                  },
-                  {
-                    id: 2,
                     name: "element",
                     type: "text",
                     attrs: buildDefaultElementTextAttrs()
@@ -247,17 +242,11 @@ export default {
         this.selectedObject = block;
       }
     },
-    handleRemoveSelectedObject() {
-      // this.selectedObject = null;
-      console.log("remove", this.selectedObject);
-      // find selected element and remove from parent
-      if (this.selectedObject.name === "block") {
-        const index = this.content.blocks.findIndex(
-          block => block.id === this.selectedObject.id
-        );
-        this.content.blocks.splice(index, 1);
-      } else if (this.selectedObject.name === "column") {
-        // this next
+    handleRemoveElement({ block, column, element }) {
+      console.log("remove element", block, column, element);
+      const index = column.children.findIndex(child => child.id === element.id);
+      if (index !== -1) {
+        column.children.splice(index, 1);
       }
     }
   }
