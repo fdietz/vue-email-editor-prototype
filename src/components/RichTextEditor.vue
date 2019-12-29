@@ -174,6 +174,7 @@ export default {
   .menubar {
     margin: 1px;
     background-color: #f8f9fa;
+    padding: 4px;
   }
 
   .editor-content {

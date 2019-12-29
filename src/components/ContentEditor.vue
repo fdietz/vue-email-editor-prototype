@@ -198,8 +198,8 @@ $column-border-color: $secondary;
 
   .action {
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    top: 0px;
+    right: 0px;
 
     display: none;
 
@@ -284,8 +284,8 @@ $column-border-color: $secondary;
 
   .action {
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    top: 0px;
+    right: 0px;
 
     display: none;
 
