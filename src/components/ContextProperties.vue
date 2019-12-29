@@ -71,7 +71,6 @@ export default {
 <style>
 .context-properties {
   border-left: 1px solid #e8e8ef;
-  margin-left: 1rem;
   padding: 1rem;
 }
 </style>
