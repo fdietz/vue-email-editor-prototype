@@ -1,14 +1,5 @@
 <template>
   <div class="content-editor">
-    <h2>Content Editor</h2>
-
-    <div class="breadcrumb">
-      Breadcrumb:
-      <span v-if="currentBlock"> Block {{ currentBlock.id }} </span>
-      <span v-if="currentColumn"> / Column {{ currentColumn.id }} </span>
-      <span v-if="currentElement"> / Element {{ currentElement.id }} </span>
-    </div>
-
     <div
       v-for="block in content.children"
       :key="block.id"
@@ -43,7 +34,7 @@
             }"
           >
             <div class="column-border-wrapper">
-              <div class="column-children">
+              <div v-if="column.children.length > 0" class="column-children">
                 <div
                   v-for="element in column.children"
                   :key="element.id"
@@ -83,6 +74,13 @@
                         element.attrs.buttonText
                       }}</b-button>
                     </div>
+                  </div>
+                </div>
+              </div>
+              <div v-else class="column-children">
+                <div class="element">
+                  <div class="element-placeholder">
+                    Placeholder
                   </div>
                 </div>
               </div>
@@ -155,6 +153,7 @@ $column-border-color: $secondary;
 
 .content-editor {
   padding: 1rem;
+  background-color: #f3f3f3;
 }
 
 .block {
@@ -323,5 +322,9 @@ $column-border-color: $secondary;
 
 .element-text {
   word-break: break-word;
+}
+
+.element-placeholder {
+  text-align: center;
 }
 </style>

@@ -21,8 +21,8 @@ import ContextProperties from "./ContextProperties.vue";
 
 const DEFAULT_PADDING = 20;
 const DEFAULT_COLOR = "#555";
-const DEFAULT_BACKGROUND_COLOR = "#f5f5f5";
-const DEFAULT_ELEMENT_BACKGROUND_COLOR = "#f5f5f5";
+const DEFAULT_BACKGROUND_COLOR = "#fff";
+const DEFAULT_ELEMENT_BACKGROUND_COLOR = "#fff";
 
 const buildDefaultBlockAttrs = () => ({
   padding: 20,
@@ -265,6 +265,7 @@ export default {
   display: grid;
   grid-template-columns: 25% auto 25%;
   grid-template-rows: auto;
+  height: 100vh;
   padding-top: 65px;
 }
 </style>

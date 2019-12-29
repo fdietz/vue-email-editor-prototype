@@ -1,8 +1,6 @@
 <template>
   <div class="content-browser">
-    <h2>Content Browser</h2>
-
-    <h3>Layouts</h3>
+    <h5 class="text-uppercase">Layouts</h5>
     <ul>
       <li>
         <a href="#" @click="addColumn(1)">1 Column</a>
@@ -12,6 +10,16 @@
       </li>
       <li>
         <a href="#" @click="addColumn(3)">3 Column</a>
+      </li>
+    </ul>
+
+    <hr />
+
+    <h5 class="text-uppercase">Elements</h5>
+
+    <ul>
+      <li>
+        <a href="#" @click="addTextElement">Text</a>
       </li>
     </ul>
   </div>

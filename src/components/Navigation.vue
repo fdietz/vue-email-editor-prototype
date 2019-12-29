@@ -1,6 +1,8 @@
 <template>
   <div class="navigation">
     Email Editor
+
+    <b-button variant="primary" class="ml-auto">Preview</b-button>
   </div>
 </template>
 
@@ -21,7 +23,8 @@ export default {};
 
   padding: 1rem;
 
-  background-color: #fff;
+  color: #fff;
+  background-color: #2c2c2c;
 
   border-bottom: 1px solid #e8e8ef;
 
