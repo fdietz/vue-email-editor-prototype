@@ -21,15 +21,17 @@ import ContentEditor from "./ContentEditor.vue";
 import ContextProperties from "./ContextProperties.vue";
 
 const DEFAULT_PADDING = 20;
+const DEFAULT_COLOR = "#555";
 const DEFAULT_BACKGROUND_COLOR = "#f5f5f5";
+const DEFAULT_ELEMENT_BACKGROUND_COLOR = "#f5f5f5";
 
 const buildDefaultBlockAttrs = () => ({
-  padding: DEFAULT_PADDING,
+  padding: 20,
   backgroundColor: DEFAULT_BACKGROUND_COLOR
 });
 
 const buildDefaultColumnAttrs = () => ({
-  padding: DEFAULT_PADDING,
+  padding: 0,
   alignSelf: "center"
 });
 
@@ -39,7 +41,18 @@ const buildDefaultColumnAttrs = () => ({
 
 const buildDefaultElementTextAttrs = () => ({
   padding: DEFAULT_PADDING,
-  content: "Lorem ipsum"
+  textAlign: "center",
+  color: DEFAULT_COLOR,
+  backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR,
+  textContent: "Lorem ipsum"
+});
+
+const buildDefaultElementButtonAttrs = () => ({
+  padding: DEFAULT_PADDING,
+  textAlign: "center",
+  color: DEFAULT_COLOR,
+  backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR,
+  buttonText: "Lorem ipsum"
 });
 
 export default {
@@ -147,8 +160,8 @@ export default {
                   {
                     id: 1,
                     name: "element",
-                    type: "text",
-                    attrs: buildDefaultElementTextAttrs()
+                    type: "button",
+                    attrs: buildDefaultElementButtonAttrs()
                   }
                 ]
               }
@@ -166,6 +179,18 @@ export default {
                 children: [
                   {
                     id: 1,
+                    name: "element",
+                    type: "text",
+                    attrs: buildDefaultElementTextAttrs()
+                  },
+                  {
+                    id: 2,
+                    name: "element",
+                    type: "text",
+                    attrs: buildDefaultElementTextAttrs()
+                  },
+                  {
+                    id: 3,
                     name: "element",
                     type: "text",
                     attrs: buildDefaultElementTextAttrs()

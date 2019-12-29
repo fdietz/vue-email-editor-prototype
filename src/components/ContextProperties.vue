@@ -36,8 +36,27 @@
         <b-form-input type="number" v-model="selectedObject.attrs.padding" />
       </b-form-group>
 
-      <b-form-group v-if="selectedObject.type == 'text'" label="Content">
-        <b-form-textarea v-model="selectedObject.attrs.content" />
+      <b-form-group label="Alignment">
+        <b-form-select
+          v-model="selectedObject.attrs.textAlign"
+          :options="textAlignOptions"
+        ></b-form-select>
+      </b-form-group>
+
+      <b-form-group label="Color">
+        <b-form-input v-model="selectedObject.attrs.color" />
+      </b-form-group>
+
+      <b-form-group label="Background Color">
+        <b-form-input v-model="selectedObject.attrs.backgroundColor" />
+      </b-form-group>
+
+      <b-form-group v-if="selectedObject.type == 'text'" label="Text Content">
+        <b-form-textarea v-model="selectedObject.attrs.textContent" />
+      </b-form-group>
+
+      <b-form-group v-if="selectedObject.type == 'button'" label="Button Text">
+        <b-form-textarea v-model="selectedObject.attrs.buttonText" />
       </b-form-group>
     </div>
   </div>
@@ -61,6 +80,11 @@ export default {
         { value: "flex-start", text: "Left" },
         { value: "center", text: "Center" },
         { value: "flex-end", text: "Right" }
+      ],
+      textAlignOptions: [
+        { value: "left", text: "Left" },
+        { value: "center", text: "Center" },
+        { value: "right", text: "Right" }
       ]
     };
   },

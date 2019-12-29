@@ -24,7 +24,6 @@
           <div
             v-for="column in block.children"
             :key="column.id"
-            @click.stop="handleSelectionChanged(block, column)"
             class="column"
             :class="{
               selected:
@@ -36,8 +35,7 @@
             }"
           >
             <div class="column-border-wrapper">
-              <div class="border-label">Column {{ column.id }}</div>
-              <div class="column-children" :style="columnStyles(column)">
+              <div class="column-children">
                 <div
                   v-for="element in column.children"
                   :key="element.id"
@@ -54,11 +52,21 @@
                   }"
                 >
                   <div class="element-border-wrapper">
-                    <div class="border-label">Element {{ element.id }}</div>
                     <div
                       v-if="element.type == 'text'"
-                      v-html="element.attrs.content"
+                      v-html="element.attrs.textContent"
+                      class="element-text"
+                      :style="elementStyles(element)"
                     ></div>
+                    <div
+                      v-if="element.type == 'button'"
+                      class="element-button"
+                      :style="elementStyles(element)"
+                    >
+                      <b-button variant="primary">{{
+                        element.attrs.buttonText
+                      }}</b-button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -102,12 +110,15 @@ export default {
     blockStyles({ attrs = {} }) {
       return {
         padding: `${attrs.padding}px`,
-        backgroundColor: `${attrs.backgroundColor || "#f5f5f5"}`
+        backgroundColor: `${attrs.backgroundColor}`
       };
     },
     elementStyles({ attrs = {} }) {
       return {
-        padding: `${attrs.padding}px`
+        padding: `${attrs.padding}px`,
+        color: `${attrs.color}`,
+        backgroundColor: `${attrs.backgroundColor}`,
+        textAlign: `${attrs.textAlign}`
       };
     }
   }
@@ -127,7 +138,7 @@ $column-border-color: $secondary;
 .block {
   display: flex;
   flex-direction: column;
-  z-index: 1;
+  // z-index: 1;
   cursor: pointer;
 
   &:hover,
@@ -176,7 +187,7 @@ $column-border-color: $secondary;
 }
 
 .column {
-  z-index: 2;
+  // z-index: 2;
 
   display: flex;
   flex: 1 1;
@@ -186,23 +197,23 @@ $column-border-color: $secondary;
 
   cursor: pointer;
 
-  &:hover,
-  &.selected {
-    .column-border-wrapper {
-      border-color: $column-border-color;
+  // &:hover,
+  // &.selected {
+  //   .column-border-wrapper {
+  //     border-color: $column-border-color;
 
-      > .border-label {
-        display: flex;
-      }
-    }
-  }
+  //     > .border-label {
+  //       display: flex;
+  //     }
+  //   }
+  // }
 
   .column-children {
   }
 }
 
 .element {
-  z-index: 3;
+  // z-index: 3;
 
   display: flex;
   flex: 1 1;
@@ -286,5 +297,9 @@ $column-border-color: $secondary;
 
 .breadcrumb {
   margin-bottom: 2rem;
+}
+
+.element-text {
+  word-break: break-word;
 }
 </style>
