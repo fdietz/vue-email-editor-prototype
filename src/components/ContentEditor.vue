@@ -186,20 +186,16 @@ $column-border-color: $secondary;
     top: 0px;
     right: 0px;
 
-    display: none;
-
     z-index: 2;
   }
 }
 
 .block-border-wrapper {
   border-color: $block-border-color;
-  // z-index: 1;
 }
 
 .element-border-wrapper {
   border-color: $column-border-color;
-  // z-index: 2;
 }
 
 .column {
