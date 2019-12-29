@@ -1,6 +1,9 @@
 <template>
   <div class="content-browser">
-    <h5 class="text-uppercase">Layouts</h5>
+    <h5 class="text-uppercase text-secondary">
+      <font-awesome-icon icon="caret-down" /> Layouts
+    </h5>
+
     <ul>
       <li>
         <a href="#" @click="addColumn(1)">1 Column</a>
@@ -15,11 +18,17 @@
 
     <hr />
 
-    <h5 class="text-uppercase">Elements</h5>
+    <h5 class="text-uppercase text-secondary">
+      <font-awesome-icon icon="caret-down" />
+      Elements
+    </h5>
 
     <ul>
       <li>
-        <a href="#" @click="addTextElement">Text</a>
+        <a href="#">Text</a>
+      </li>
+      <li>
+        <a href="#">Button</a>
       </li>
     </ul>
   </div>

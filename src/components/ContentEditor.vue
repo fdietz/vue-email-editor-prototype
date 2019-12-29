@@ -12,12 +12,9 @@
       <div class="block-border-wrapper">
         <div class="border-label">Block {{ block.id }}</div>
         <div class="action">
-          <b-button
-            variant="secondary"
-            size="sm"
-            @click.stop="removeBlock(block)"
-            >x</b-button
-          >
+          <b-button variant="naked" size="sm" @click.stop="removeBlock(block)"
+            ><font-awesome-icon icon="times"
+          /></b-button>
         </div>
         <div class="block-children" :style="blockStyles(block)">
           <div
@@ -53,11 +50,11 @@
                   <div class="element-border-wrapper">
                     <div class="action">
                       <b-button
-                        variant="secondary"
+                        variant="naked"
                         size="sm"
                         @click.stop="removeElement(block, column, element)"
-                        >x</b-button
-                      >
+                        ><font-awesome-icon icon="times"
+                      /></b-button>
                     </div>
                     <div
                       v-if="element.type == 'text'"

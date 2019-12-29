@@ -12,6 +12,7 @@
     <div v-if="selectedObject.name == 'element'">
       <b-form-group v-if="selectedObject.type == 'text'" label="Text Content">
         <b-form-textarea v-model="selectedObject.attrs.textContent" />
+        <RichTextEditor v-model="selectedObject.attrs.textContent" />
       </b-form-group>
 
       <b-form-group v-if="selectedObject.type == 'button'" label="Button Text">
@@ -45,12 +46,18 @@
 </template>
 
 <script>
+import RichTextEditor from "./RichTextEditor.vue";
+
 export default {
+  components: {
+    RichTextEditor
+  },
   props: {
     selectedObject: {
       type: Object
     }
   },
+
   data() {
     return {
       alignSelfOptions: [

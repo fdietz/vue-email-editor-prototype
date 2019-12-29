@@ -174,7 +174,11 @@ export default {
                     id: 1,
                     name: "element",
                     type: "text",
-                    attrs: buildDefaultElementTextAttrs()
+                    attrs: {
+                      ...buildDefaultElementTextAttrs(),
+                      textContent:
+                        "<h2>Heading</h2><p>This is a <b>bold</b> paragraph</p>"
+                    }
                   },
                   {
                     id: 2,
