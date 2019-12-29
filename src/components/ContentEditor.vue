@@ -150,6 +150,7 @@ $column-border-color: $secondary;
 
 .content-editor {
   padding: 1rem;
+  padding-top: 2rem;
   background-color: #f3f3f3;
 }
 

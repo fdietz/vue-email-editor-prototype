@@ -2,77 +2,103 @@
   <div>
     <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
       <div class="menubar">
-        <button
+        <b-button
+          variant="light"
+          size="sm"
           class="menubar__button"
-          :class="{ 'is-active': isActive.bold() }"
+          :class="{ active: isActive.bold() }"
           @click="commands.bold"
         >
-          <icon name="bold" />B
-        </button>
+          <font-awesome-icon icon="bold" />
+        </b-button>
 
-        <button
+        <b-button
+          variant="light"
+          size="sm"
           class="menubar__button"
-          :class="{ 'is-active': isActive.italic() }"
+          :class="{ active: isActive.italic() }"
           @click="commands.italic"
         >
-          <icon name="italic" />I
-        </button>
+          <font-awesome-icon icon="italic" />
+        </b-button>
 
-        <button
+        <b-button
+          variant="light"
+          size="sm"
           class="menubar__button"
-          :class="{ 'is-active': isActive.strike() }"
+          :class="{ active: isActive.strike() }"
           @click="commands.strike"
         >
-          <icon name="strike" />S
-        </button>
+          <font-awesome-icon icon="strikethrough" />
+        </b-button>
 
-        <button
+        <b-button
+          variant="light"
+          size="sm"
           class="menubar__button"
-          :class="{ 'is-active': isActive.underline() }"
+          :class="{ active: isActive.underline() }"
           @click="commands.underline"
         >
-          <icon name="underline" />U
-        </button>
+          <font-awesome-icon icon="underline" />
+        </b-button>
 
-        <button
+        <b-button
+          variant="light"
+          size="sm"
           class="menubar__button"
-          :class="{ 'is-active': isActive.paragraph() }"
+          :class="{ active: isActive.paragraph() }"
           @click="commands.paragraph"
         >
-          <icon name="paragraph" />P
-        </button>
+          <font-awesome-icon icon="paragraph" />
+        </b-button>
 
-        <button
+        <b-button
+          variant="light"
+          size="sm"
           class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+          :class="{ active: isActive.heading({ level: 1 }) }"
           @click="commands.heading({ level: 1 })"
         >
           H1
-        </button>
+        </b-button>
 
-        <button
+        <b-button
+          variant="light"
+          size="sm"
           class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 2 }) }"
+          :class="{ active: isActive.heading({ level: 2 }) }"
           @click="commands.heading({ level: 2 })"
         >
           H2
-        </button>
+        </b-button>
 
-        <button
+        <b-button
+          variant="light"
+          size="sm"
           class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+          :class="{ active: isActive.heading({ level: 3 }) }"
           @click="commands.heading({ level: 3 })"
         >
           H3
-        </button>
+        </b-button>
 
-        <button class="menubar__button" @click="commands.undo">
-          <icon name="undo" />U
-        </button>
+        <b-button
+          variant="light"
+          size="sm"
+          class="menubar__button"
+          @click="commands.undo"
+        >
+          <font-awesome-icon icon="undo" />
+        </b-button>
 
-        <button class="menubar__button" @click="commands.redo">
-          <icon name="redo" />R
-        </button>
+        <b-button
+          variant="light"
+          size="sm"
+          class="menubar__button"
+          @click="commands.redo"
+        >
+          <font-awesome-icon icon="redo" />
+        </b-button>
       </div>
     </editor-menu-bar>
     <editor-content :editor="editor"></editor-content>
