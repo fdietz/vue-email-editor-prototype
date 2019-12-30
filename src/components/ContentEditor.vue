@@ -32,62 +32,66 @@
         <div class="draggable-wrapper block-border-wrapper"></div>
         <div class="block-children" :style="blockStyles(block)">
           <div v-for="column in block.children" :key="column.id" class="column">
-            <div v-if="column.children.length > 0" class="column-children">
-              <draggable
-                class="dragArea"
-                draggable=".element"
-                :list="column.children"
-                :group="{ name: 'elements', pull: true, put: ['elements'] }"
-                @change="log"
-                @start="handleDraggableStart"
-                @end="handleDraggableEnd"
-                @add="handleDraggableAdd"
-                :class="{ dragging: draggableInProgress }"
+            <draggable
+              v-if="column.children.length > 0"
+              class="column-children"
+              draggable=".element"
+              :list="column.children"
+              :group="{ name: 'elements', pull: true, put: ['elements'] }"
+              @change="log"
+              @start="handleDraggableStart"
+              @end="handleDraggableEnd"
+              @add="handleDraggableAdd"
+              :class="{ dragging: draggableInProgress }"
+            >
+              <div
+                v-for="element in column.children"
+                :key="element.id"
+                @click.stop="handleSelectionChanged(block, column, element)"
+                class="element"
+                :class="{
+                  selected:
+                    currentElement &&
+                    currentColumn &&
+                    currentBlock &&
+                    currentElement.id == element.id &&
+                    currentColumn.id === column.id &&
+                    currentBlock.id === block.id
+                }"
               >
-                <div
-                  v-for="element in column.children"
-                  :key="element.id"
-                  @click.stop="handleSelectionChanged(block, column, element)"
-                  class="element"
-                  :class="{
-                    selected:
-                      currentElement &&
-                      currentColumn &&
-                      currentBlock &&
-                      currentElement.id == element.id &&
-                      currentColumn.id === column.id &&
-                      currentBlock.id === block.id
-                  }"
-                >
-                  <div class="border-wrapper element-border-wrapper">
-                    <div class="border-action">
-                      <b-button
-                        variant="naked"
-                        size="sm"
-                        @click.stop="removeElement(block, column, element)"
-                        ><font-awesome-icon icon="times"
-                      /></b-button>
-                    </div>
-                  </div>
-                  <div class="draggable-wrapper element-border-wrapper"></div>
-                  <div
-                    v-if="element.type == 'text'"
-                    v-html="element.attrs.textContent"
-                    class="element-text"
-                    :style="elementStyles(element)"
-                  ></div>
-                  <div
-                    v-if="element.type == 'button'"
-                    class="element-button"
-                    :style="elementStyles(element)"
-                  >
-                    <b-button variant="primary">{{
-                      element.attrs.buttonText
-                    }}</b-button>
+                <div class="border-wrapper element-border-wrapper">
+                  <div class="border-action">
+                    <b-button
+                      variant="naked"
+                      size="sm"
+                      @click.stop="removeElement(block, column, element)"
+                      ><font-awesome-icon icon="times"
+                    /></b-button>
                   </div>
                 </div>
-              </draggable>
-            </div>
+                <div class="draggable-wrapper element-border-wrapper"></div>
+                <div
+                  v-if="element.type == 'image'"
+                  class="element-image"
+                  :style="elementStyles(element)"
+                ><img :src="element.attrs.imageSrc"></div>
+                <div
+                  v-if="element.type == 'text'"
+                  v-html="element.attrs.textContent"
+                  class="element-text"
+                  :style="elementStyles(element)"
+                ></div>
+                <div
+                  v-if="element.type == 'button'"
+                  class="element-button"
+                  :style="elementStyles(element)"
+                >
+                  <b-button variant="primary">{{
+                    element.attrs.buttonText
+                  }}</b-button>
+                </div>
+              </div>
+            </draggable>
             <div v-else class="column-children">
               <div class="element">
                 <draggable
@@ -297,9 +301,12 @@ $column-border-color: $secondary;
   position: relative;
 
   display: flex;
+  align-items: center;
   flex: 1 1;
 
   cursor: pointer;
+
+  overflow: hidden;
 
   &:hover,
   &.selected {
@@ -326,6 +333,13 @@ $column-border-color: $secondary;
 
 .element-text {
   word-break: break-word;
+}
+
+.element-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1;
 }
 
 .element-placeholder {

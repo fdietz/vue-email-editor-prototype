@@ -31,6 +31,14 @@ export const buildDefaultElementButtonAttrs = () => ({
   buttonText: "Lorem ipsum"
 });
 
+export const buildDefaultElementImageAttrs = () => ({
+  padding: DEFAULT_PADDING,
+  textAlign: "center",
+  color: DEFAULT_COLOR,
+  backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR,
+  imageSrc: "image.jpg"
+});
+
 export const createDefaultContent = () => ({
   children: [
     {
@@ -46,66 +54,11 @@ export const createDefaultContent = () => ({
             {
               id: nextGlobalId(),
               name: "element",
-              type: "text",
-              attrs: buildDefaultElementTextAttrs()
-            }
-          ]
-        },
-        {
-          id: nextGlobalId(),
-          name: "column",
-          attrs: buildDefaultColumnAttrs(),
-          children: [
-            {
-              id: nextGlobalId(),
-              name: "element",
-              type: "text",
-              attrs: buildDefaultElementTextAttrs()
-            },
-            {
-              id: nextGlobalId(),
-              name: "element",
-              type: "text",
-              attrs: buildDefaultElementTextAttrs()
-            }
-          ]
-        },
-        {
-          id: nextGlobalId(),
-          name: "column",
-          attrs: buildDefaultColumnAttrs(),
-          children: []
-        }
-      ]
-    },
-    {
-      id: nextGlobalId(),
-      name: "block",
-      attrs: buildDefaultBlockAttrs(),
-      children: [
-        {
-          id: nextGlobalId(),
-          name: "column",
-          attrs: buildDefaultColumnAttrs(),
-          children: [
-            {
-              id: nextGlobalId(),
-              name: "element",
-              type: "text",
-              attrs: buildDefaultElementTextAttrs()
-            }
-          ]
-        },
-        {
-          id: nextGlobalId(),
-          name: "column",
-          attrs: buildDefaultColumnAttrs(),
-          children: [
-            {
-              id: nextGlobalId(),
-              name: "element",
-              type: "button",
-              attrs: buildDefaultElementButtonAttrs()
+              type: "image",
+              attrs: {
+                ...buildDefaultElementImageAttrs(),
+                imageSrc: "https://via.placeholder.com/400x100?text=You Logo here"
+              }
             }
           ]
         }
@@ -127,21 +80,117 @@ export const createDefaultContent = () => ({
               type: "text",
               attrs: {
                 ...buildDefaultElementTextAttrs(),
-                textContent:
-                  "<h2>Heading</h2><p>This is a <b>bold</b> paragraph</p>"
+                textAlign: "left",
+                textContent: `
+              <h2>This is a title</h2>
+              
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam at, nihil quas harum mollitia dolores odio. Inventore delectus nihil soluta quos, magni doloribus, 
+              voluptas aspernatur explicabo atque perspiciatis possimus voluptates.
+              </p>
+              
+              <a href="#">Learn more</a>`
               }
-            },
+            }
+          ]
+        },
+        {
+          id: nextGlobalId(),
+          name: "column",
+          attrs: buildDefaultColumnAttrs(),
+          children: [
+            {
+              id: nextGlobalId(),
+              name: "element",
+              type: "image",
+              attrs: {
+                ...buildDefaultElementImageAttrs(),
+                imageSrc: "https://via.placeholder.com/220x200"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: nextGlobalId(),
+      name: "block",
+      attrs: buildDefaultBlockAttrs(),
+      children: [
+        {
+          id: nextGlobalId(),
+          name: "column",
+          attrs: buildDefaultColumnAttrs(),
+          children: [
             {
               id: nextGlobalId(),
               name: "element",
               type: "text",
-              attrs: buildDefaultElementTextAttrs()
-            },
+              attrs: {
+                ...buildDefaultElementTextAttrs(),
+                textAlign: "left",
+                textContent:
+                  `<h2>Sub Section Title</h2>
+                  
+                  <p>
+                  Sub Section Title
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod eum eius numquam sint dolore voluptatibus beatae ab ad, dignissimos fugiat? Nisi odio commodi debitis eveniet tenetur provident aliquid tempora placeat.
+                  </p>
+                  `
+              }
+            }
+          ]
+        },
+        {
+          id: nextGlobalId(),
+          name: "column",
+          attrs: buildDefaultColumnAttrs(),
+          children: [
             {
               id: nextGlobalId(),
               name: "element",
               type: "text",
-              attrs: buildDefaultElementTextAttrs()
+              attrs: {
+                ...buildDefaultElementTextAttrs(),
+                textAlign: "left",
+                textContent:
+                  `<h2>Sub Section Title</h2>
+                  
+                  <p>
+                  Sub Section Title
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod eum eius numquam sint dolore voluptatibus beatae ab ad, dignissimos fugiat? Nisi odio commodi debitis eveniet tenetur provident aliquid tempora placeat.
+                  </p>
+                  `
+              }
+            }
+          ]
+        },
+      ]
+    },
+    {
+      id: nextGlobalId(),
+      name: "block",
+      attrs: buildDefaultBlockAttrs(),
+      children: [
+        {
+          id: nextGlobalId(),
+          name: "column",
+          attrs: buildDefaultColumnAttrs(),
+          children: [
+            {
+              id: nextGlobalId(),
+              name: "element",
+              type: "text",
+              attrs: {
+                ...buildDefaultElementTextAttrs(),
+                textAlign: "left",
+                textContent:
+                  ` 
+                <p>
+                  You received this email because you're signed up to receive updates from us
+                </p>
+                <a href="#">Click here to unsubscribe</a>
+                `
+              }
             }
           ]
         }

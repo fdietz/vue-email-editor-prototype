@@ -15,7 +15,11 @@
       </b-form-group>
 
       <b-form-group v-if="selectedObject.type == 'button'" label="Button Text">
-        <b-form-textarea v-model="selectedObject.attrs.buttonText" />
+        <b-form-input v-model="selectedObject.attrs.buttonText" />
+      </b-form-group>
+
+      <b-form-group v-if="selectedObject.type == 'image'" label="Image Src">
+        <b-form-input v-model="selectedObject.attrs.imageSrc" />
       </b-form-group>
 
       <hr />
