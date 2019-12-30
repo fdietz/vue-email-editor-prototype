@@ -4,17 +4,19 @@
       <font-awesome-icon icon="caret-down" /> Layouts
     </h5>
 
-    <ul>
-      <li>
-        <a href="#" @click="addColumn(1)">1 Column</a>
-      </li>
-      <li>
-        <a href="#" @click="addColumn(2)">2 Column</a>
-      </li>
-      <li>
-        <a href="#" @click="addColumn(3)">3 Column</a>
-      </li>
-    </ul>
+    <draggable
+      class="dragArea draggable-list"
+      draggable=".block-item"
+      :sort="false"
+      :list="layouts"
+      :group="{ name: 'blocks', pull: 'clone', put: false }"
+      :clone="cloneBlock"
+      @change="log"
+    >
+      <div v-for="layout in layouts" :key="layout.name" class="block-item">
+        {{ layout.name }}
+      </div>
+    </draggable>
 
     <hr />
 
@@ -35,18 +37,78 @@
 </template>
 
 <script>
+import draggable from "vuedraggable";
+
+import { buildBlock } from "@/store";
+
 export default {
+  components: {
+    draggable
+  },
+  data() {
+    return {
+      layouts: [
+        {
+          name: "1 Column",
+          columnCount: 1
+        },
+        {
+          name: "2 Columns",
+          columnCount: 2
+        },
+        {
+          name: "3 Columns",
+          columnCount: 3
+        }
+      ]
+    };
+  },
   methods: {
     addColumn(count) {
       this.$emit("add-column", { count });
+    },
+    cloneBlock({ columnCount }) {
+      return buildBlock(columnCount);
+    },
+    log: function(evt) {
+      window.console.log(evt);
     }
   }
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import "../styles/variables.scss";
+
+$block-border-color: $primary;
+
 .content-browser {
   border-right: 1px solid #e8e8ef;
   padding: 1rem;
+}
+
+.draggable-list {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.block-item {
+  display: flex;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 0.5rem;
+
+  cursor: pointer;
+
+  &.sortable-ghost {
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem auto;
+
+    border: 2px solid $block-border-color;
+    border-style: dashed;
+  }
 }
 </style>

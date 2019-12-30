@@ -1,82 +1,99 @@
 <template>
   <div class="content-editor">
-    <div
-      v-for="block in content.children"
-      :key="block.id"
-      @click="handleSelectionChanged(block)"
-      class="block"
-      :class="{
-        selected: !currentColumn && currentBlock && currentBlock.id === block.id
-      }"
+    <draggable
+      class="dragArea"
+      :list="content.children"
+      group="blocks"
+      @change="log"
+      @start="handleDraggableStart"
+      @end="handleDraggableEnd"
+      :class="{ dragging: draggableInProgress }"
     >
-      <div class="border-wrapper block-border-wrapper">
-        <div class="border-label">Block {{ block.id }}</div>
-        <div class="border-action">
-          <b-button variant="naked" size="sm" @click.stop="removeBlock(block)"
-            ><font-awesome-icon icon="times"
-          /></b-button>
+      <div
+        v-for="block in content.children"
+        :key="block.id"
+        @click="handleSelectionChanged(block)"
+        class="block"
+        :class="{
+          selected:
+            !currentColumn && currentBlock && currentBlock.id === block.id
+        }"
+      >
+        <div class="border-wrapper block-border-wrapper">
+          <div class="border-label">Block {{ block.id }}</div>
+          <div class="border-action">
+            <b-button variant="naked" size="sm" @click.stop="removeBlock(block)"
+              ><font-awesome-icon icon="times"
+            /></b-button>
+          </div>
         </div>
-      </div>
-      <div class="block-children" :style="blockStyles(block)">
-        <div v-for="column in block.children" :key="column.id" class="column">
-          <div v-if="column.children.length > 0" class="column-children">
-            <div
-              v-for="element in column.children"
-              :key="element.id"
-              @click.stop="handleSelectionChanged(block, column, element)"
-              class="element"
-              :class="{
-                selected:
-                  currentElement &&
-                  currentColumn &&
-                  currentBlock &&
-                  currentElement.id == element.id &&
-                  currentColumn.id === column.id &&
-                  currentBlock.id === block.id
-              }"
-            >
-              <div class="border-wrapper element-border-wrapper">
-                <div class="border-action">
-                  <b-button
-                    variant="naked"
-                    size="sm"
-                    @click.stop="removeElement(block, column, element)"
-                    ><font-awesome-icon icon="times"
-                  /></b-button>
+        <div class="draggable-wrapper block-border-wrapper"></div>
+        <div class="block-children" :style="blockStyles(block)">
+          <div v-for="column in block.children" :key="column.id" class="column">
+            <div v-if="column.children.length > 0" class="column-children">
+              <div
+                v-for="element in column.children"
+                :key="element.id"
+                @click.stop="handleSelectionChanged(block, column, element)"
+                class="element"
+                :class="{
+                  selected:
+                    currentElement &&
+                    currentColumn &&
+                    currentBlock &&
+                    currentElement.id == element.id &&
+                    currentColumn.id === column.id &&
+                    currentBlock.id === block.id
+                }"
+              >
+                <div class="border-wrapper element-border-wrapper">
+                  <div class="border-action">
+                    <b-button
+                      variant="naked"
+                      size="sm"
+                      @click.stop="removeElement(block, column, element)"
+                      ><font-awesome-icon icon="times"
+                    /></b-button>
+                  </div>
+                </div>
+                <div
+                  v-if="element.type == 'text'"
+                  v-html="element.attrs.textContent"
+                  class="element-text"
+                  :style="elementStyles(element)"
+                ></div>
+                <div
+                  v-if="element.type == 'button'"
+                  class="element-button"
+                  :style="elementStyles(element)"
+                >
+                  <b-button variant="primary">{{
+                    element.attrs.buttonText
+                  }}</b-button>
                 </div>
               </div>
-              <div
-                v-if="element.type == 'text'"
-                v-html="element.attrs.textContent"
-                class="element-text"
-                :style="elementStyles(element)"
-              ></div>
-              <div
-                v-if="element.type == 'button'"
-                class="element-button"
-                :style="elementStyles(element)"
-              >
-                <b-button variant="primary">{{
-                  element.attrs.buttonText
-                }}</b-button>
-              </div>
             </div>
-          </div>
-          <div v-else class="column-children">
-            <div class="element">
-              <div class="element-placeholder">
-                Placeholder
+            <div v-else class="column-children">
+              <div class="element">
+                <div class="element-placeholder">
+                  Placeholder
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </draggable>
   </div>
 </template>
 
 <script>
+import draggable from "vuedraggable";
+
 export default {
+  components: {
+    draggable
+  },
   props: {
     currentBlock: {
       type: Object
@@ -92,7 +109,9 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      draggableInProgress: false
+    };
   },
   methods: {
     handleSelectionChanged(block, column, element) {
@@ -123,12 +142,24 @@ export default {
         backgroundColor: `${attrs.backgroundColor}`,
         textAlign: `${attrs.textAlign}`
       };
+    },
+    log: function(evt) {
+      window.console.log(evt);
+    },
+    handleDraggableStart() {
+      console.log("start");
+      this.draggableInProgress = true;
+    },
+    handleDraggableEnd() {
+      console.log("end");
+
+      this.draggableInProgress = false;
     }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../styles/variables.scss";
 
 $block-border-color: $primary;
@@ -157,6 +188,15 @@ $column-border-color: $secondary;
     display: flex;
     width: 600px;
     margin: 0px auto;
+  }
+
+  &.sortable-ghost {
+    > .draggable-wrapper {
+      display: flex;
+    }
+    > .border-wrapper {
+      display: none;
+    }
   }
 }
 
@@ -188,6 +228,21 @@ $column-border-color: $secondary;
 
     z-index: 2;
   }
+}
+
+.draggable-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: none;
+
+  border: 2px solid red;
+  // border-color: inherit;
+  border-radius: 2px;
+  border-style: dashed;
 }
 
 .block-border-wrapper {
@@ -238,6 +293,20 @@ $column-border-color: $secondary;
 }
 
 .element-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1;
   text-align: center;
+  background-color: #efefef;
+
+  font-style: italic;
+  border-radius: 3px;
+}
+
+.dragging {
+  .border-wrapper {
+    display: none !important;
+  }
 }
 </style>

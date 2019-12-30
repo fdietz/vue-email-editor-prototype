@@ -16,7 +16,8 @@
     "sass": "^1.23.7",
     "tiptap": "^1.26.6",
     "tiptap-extensions": "^1.28.6",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vuedraggable": "^2.23.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",
