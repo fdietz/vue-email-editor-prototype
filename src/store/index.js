@@ -3,7 +3,7 @@ const DEFAULT_COLOR = "#555";
 const DEFAULT_BACKGROUND_COLOR = "#fff";
 const DEFAULT_ELEMENT_BACKGROUND_COLOR = "transparent";
 
-let globalBlockId = 100;
+let globalId = 100;
 
 export const buildDefaultBlockAttrs = () => ({
   padding: 20,
@@ -150,10 +150,10 @@ export const createDefaultContent = () => ({
   ]
 });
 
-export const nextBlockId = () => {
-  globalBlockId++;
+export const nextGlobalId = () => {
+  globalId++;
 
-  return globalBlockId;
+  return globalId;
 };
 
 export const buildBlock = columnCount => {
@@ -175,9 +175,25 @@ export const buildBlock = columnCount => {
   }
 
   return {
-    id: nextBlockId(),
+    id: nextGlobalId(),
     name: "block",
     attrs: buildDefaultBlockAttrs(),
     children: columns
   };
 };
+
+export const buildElement = type => {
+  let attrs = {}
+  if (type === "text") {
+    attrs = buildDefaultElementTextAttrs();
+  } else if (type === "button") {
+    attrs = buildDefaultElementButtonAttrs();
+  }
+
+  return {
+    id: nextGlobalId(),
+    name: "element",
+    type,
+    attrs
+  }
+}
