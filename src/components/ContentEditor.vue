@@ -301,8 +301,7 @@ $column-border-color: $secondary;
   position: relative;
 
   display: flex;
-  align-items: center;
-  flex: 1 1;
+  align-items: flex-start;
 
   cursor: pointer;
 

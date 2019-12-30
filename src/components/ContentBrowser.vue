@@ -75,6 +75,10 @@ export default {
           name: "Button",
           type: "button"
         },
+        {
+          name: "Image",
+          type: "image"
+        }
       ]
     };
   },

@@ -36,7 +36,7 @@ export const buildDefaultElementImageAttrs = () => ({
   textAlign: "center",
   color: DEFAULT_COLOR,
   backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR,
-  imageSrc: "image.jpg"
+  imageSrc: "https://via.placeholder.com/100x100"
 });
 
 export const createDefaultContent = () => ({
@@ -237,6 +237,8 @@ export const buildElement = type => {
     attrs = buildDefaultElementTextAttrs();
   } else if (type === "button") {
     attrs = buildDefaultElementButtonAttrs();
+  } else if (type === "image") {
+    attrs = buildDefaultElementImageAttrs();
   }
 
   return {
