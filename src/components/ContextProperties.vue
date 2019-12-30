@@ -1,6 +1,6 @@
 <template>
   <div class="context-properties">
-    <div v-if="selectedObject.name == 'block'">
+    <div v-if="selectedObject && selectedObject.name == 'block'">
       <b-form-group label="Padding">
         <b-form-input type="number" v-model="selectedObject.attrs.padding" />
       </b-form-group>
@@ -9,7 +9,7 @@
       </b-form-group>
     </div>
 
-    <div v-if="selectedObject.name == 'element'">
+    <div v-if="selectedObject && selectedObject.name == 'element'">
       <b-form-group v-if="selectedObject.type == 'text'" label="Text Content">
         <RichTextEditor v-model="selectedObject.attrs.textContent" />
       </b-form-group>
