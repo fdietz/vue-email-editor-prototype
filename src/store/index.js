@@ -34,17 +34,17 @@ export const buildDefaultElementButtonAttrs = () => ({
 export const createDefaultContent = () => ({
   children: [
     {
-      id: 1,
+      id: nextGlobalId(),
       name: "block",
       attrs: buildDefaultBlockAttrs(),
       children: [
         {
-          id: 1,
+          id: nextGlobalId(),
           name: "column",
           attrs: buildDefaultColumnAttrs(),
           children: [
             {
-              id: 1,
+              id: nextGlobalId(),
               name: "element",
               type: "text",
               attrs: buildDefaultElementTextAttrs()
@@ -52,18 +52,18 @@ export const createDefaultContent = () => ({
           ]
         },
         {
-          id: 2,
+          id: nextGlobalId(),
           name: "column",
           attrs: buildDefaultColumnAttrs(),
           children: [
             {
-              id: 1,
+              id: nextGlobalId(),
               name: "element",
               type: "text",
               attrs: buildDefaultElementTextAttrs()
             },
             {
-              id: 2,
+              id: nextGlobalId(),
               name: "element",
               type: "text",
               attrs: buildDefaultElementTextAttrs()
@@ -71,7 +71,7 @@ export const createDefaultContent = () => ({
           ]
         },
         {
-          id: 3,
+          id: nextGlobalId(),
           name: "column",
           attrs: buildDefaultColumnAttrs(),
           children: []
@@ -79,17 +79,17 @@ export const createDefaultContent = () => ({
       ]
     },
     {
-      id: 2,
+      id: nextGlobalId(),
       name: "block",
       attrs: buildDefaultBlockAttrs(),
       children: [
         {
-          id: 4,
+          id: nextGlobalId(),
           name: "column",
           attrs: buildDefaultColumnAttrs(),
           children: [
             {
-              id: 1,
+              id: nextGlobalId(),
               name: "element",
               type: "text",
               attrs: buildDefaultElementTextAttrs()
@@ -97,12 +97,12 @@ export const createDefaultContent = () => ({
           ]
         },
         {
-          id: 5,
+          id: nextGlobalId(),
           name: "column",
           attrs: buildDefaultColumnAttrs(),
           children: [
             {
-              id: 1,
+              id: nextGlobalId(),
               name: "element",
               type: "button",
               attrs: buildDefaultElementButtonAttrs()
@@ -112,17 +112,17 @@ export const createDefaultContent = () => ({
       ]
     },
     {
-      id: 3,
+      id: nextGlobalId(),
       name: "block",
       attrs: buildDefaultBlockAttrs(),
       children: [
         {
-          id: 6,
+          id: nextGlobalId(),
           name: "column",
           attrs: buildDefaultColumnAttrs(),
           children: [
             {
-              id: 1,
+              id: nextGlobalId(),
               name: "element",
               type: "text",
               attrs: {
@@ -132,13 +132,13 @@ export const createDefaultContent = () => ({
               }
             },
             {
-              id: 2,
+              id: nextGlobalId(),
               name: "element",
               type: "text",
               attrs: buildDefaultElementTextAttrs()
             },
             {
-              id: 3,
+              id: nextGlobalId(),
               name: "element",
               type: "text",
               attrs: buildDefaultElementTextAttrs()

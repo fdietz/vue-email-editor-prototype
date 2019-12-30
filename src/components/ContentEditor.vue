@@ -4,9 +4,11 @@
       class="dragArea"
       :list="content.children"
       group="blocks"
+      draggable=".block"
       @change="log"
       @start="handleDraggableStart"
       @end="handleDraggableEnd"
+      @add="handleDraggableAdd"
       :class="{ dragging: draggableInProgress }"
     >
       <div
@@ -33,11 +35,13 @@
             <div v-if="column.children.length > 0" class="column-children">
               <draggable
                 class="dragArea"
+                draggable=".element"
                 :list="column.children"
-                :group="{ name: 'elements', pull: true, put: true }"
+                :group="{ name: 'elements', pull: true, put: ['elements'] }"
                 @change="log"
                 @start="handleDraggableStart"
                 @end="handleDraggableEnd"
+                @add="handleDraggableAdd"
                 :class="{ dragging: draggableInProgress }"
               >
                 <div
@@ -88,11 +92,13 @@
               <div class="element">
                 <draggable
                   class="dragArea element-placeholder"
+                  draggable=".element"
                   :list="column.children"
-                  :group="{ name: 'elements', pull: true, put: true }"
+                  :group="{ name: 'elements', pull: false, put: ['elements'] }"
                   @change="log"
                   @start="handleDraggableStart"
                   @end="handleDraggableEnd"
+                  @add="handleDraggableAdd"
                   :class="{ dragging: draggableInProgress }"
                 >
                 </draggable>
@@ -170,7 +176,10 @@ export default {
     },
     handleDraggableEnd() {
       console.log("end");
-
+      this.draggableInProgress = false;
+    },
+    handleDraggableAdd() {
+      console.log("add");
       this.draggableInProgress = false;
     }
   }
