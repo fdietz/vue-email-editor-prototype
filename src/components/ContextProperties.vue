@@ -24,7 +24,7 @@
       <b-form-group v-if="selectedObject.type == 'image'" label="Image Src">
         <b-form-input v-model="selectedObject.attrs.src" />
       </b-form-group>
-      <b-form-group v-if="selectedObject.type == 'image'" label="Button Href">
+      <b-form-group v-if="selectedObject.type == 'image'" label="Image Href">
         <b-form-input v-model="selectedObject.attrs.href" />
       </b-form-group>
       <hr />
