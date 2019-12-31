@@ -5,6 +5,7 @@
       :list="content.children"
       group="blocks"
       draggable=".block"
+      :forceFallback="true"
       @change="log"
       @start="handleDraggableStart"
       @end="handleDraggableEnd"
@@ -32,7 +33,7 @@
         <div class="border-wrapper block-border-wrapper">
           <div class="border-label">Block {{ block.id }}</div>
           <div class="border-action">
-            <b-button variant="naked" size="sm" @click.stop="removeBlock(block)"
+            <b-button variant="naked" @click.stop="removeBlock(block)"
               ><font-awesome-icon icon="times"
             /></b-button>
           </div>
@@ -230,18 +231,22 @@ export default {
       this.dragOverForBlock = null;
     },
     handleDragOverForBlock: debounce(function handle(block) {
+      console.log("drag over", block.id);
       this.dragOverForBlock = block;
     }, 100),
-    handleDragLeaveForBlock() {
+    handleDragLeaveForBlock(block) {
+      console.log("drag leave", block.id);
       this.dragOverForBlock = null;
     },
     isDragOverForBlock(block) {
       return this.dragOverForBlock && this.dragOverForBlock.id === block.id;
     },
     handleMouseOverForBlock: throttle(function handle(block) {
+      console.log("mouse over", block.id);
       this.mouseOverForBlock = block;
     }, 100),
     handleMouseLeaveForBlock(block) {
+      console.log("mouse leave", block.id);
       this.mouseOverForBlock = null;
     },
     handleMouseOverForElement: throttle(function handle(element) {
@@ -277,6 +282,8 @@ $column-border-color: $secondary;
   flex-direction: column;
   cursor: pointer;
 
+  overflow: hidden;
+
   &.hover-over,
   &.selected {
     > .border-wrapper {
@@ -292,11 +299,15 @@ $column-border-color: $secondary;
 
   &.sortable-ghost {
     > .draggable-wrapper {
-      display: flex;
+      // display: flex;
     }
     > .border-wrapper {
-      display: none;
+      // display: none;
     }
+  }
+
+  &.sortable-drag {
+    border: 2px solid $block-border-color;
   }
 }
 
@@ -322,11 +333,8 @@ $column-border-color: $secondary;
   }
 
   .border-action {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-
-    z-index: 2;
+    margin-left: auto;
+    margin-right: 0.5rem;
   }
 }
 
@@ -339,7 +347,7 @@ $column-border-color: $secondary;
 
   display: none;
 
-  border: 2px solid red;
+  border: 2px solid $block-border-color;
   border-radius: 2px;
   border-style: dashed;
 }
@@ -437,7 +445,7 @@ $column-border-color: $secondary;
 .dragging {
   .block {
     &.drag-over {
-      > .border-wrapper {
+      > .draggable-wrapper {
         display: flex !important;
       }
     }

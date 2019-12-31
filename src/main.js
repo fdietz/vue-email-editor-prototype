@@ -11,7 +11,8 @@ import {
   faStrikethrough,
   faParagraph,
   faUndo,
-  faRedo
+  faRedo,
+  faArrowsAlt
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import App from "./App.vue";
@@ -27,7 +28,8 @@ library.add(
   faStrikethrough,
   faParagraph,
   faUndo,
-  faRedo
+  faRedo,
+  faArrowsAlt
 );
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
