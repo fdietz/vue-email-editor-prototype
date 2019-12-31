@@ -112,22 +112,22 @@
                 </div>
               </div>
             </draggable>
-            <div v-else class="column-children">
+            <draggable
+              v-else
+              class="dragArea column-children"
+              draggable=".element"
+              :list="column.children"
+              :group="{ name: 'elements', pull: false, put: ['elements'] }"
+              @change="log"
+              @start="handleDraggableStart"
+              @end="handleDraggableEnd"
+              @add="handleDraggableAdd"
+              :class="{ dragging: draggableInProgress }"
+            >
               <div class="element">
-                <draggable
-                  class="dragArea element-placeholder"
-                  draggable=".element"
-                  :list="column.children"
-                  :group="{ name: 'elements', pull: false, put: ['elements'] }"
-                  @change="log"
-                  @start="handleDraggableStart"
-                  @end="handleDraggableEnd"
-                  @add="handleDraggableAdd"
-                  :class="{ dragging: draggableInProgress }"
-                >
-                </draggable>
+                <div class="element-placeholder">Drop some element here</div>
               </div>
-            </div>
+            </draggable>
           </div>
         </div>
       </div>
@@ -417,9 +417,12 @@ $column-border-color: $secondary;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex: 1 1;
+
+  width: 100%;
+  min-height: 120px;
+
   text-align: center;
-  background-color: #efefef;
+  border: 2px dashed #efefef;
 
   font-style: italic;
   border-radius: 3px;
