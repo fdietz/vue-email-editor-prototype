@@ -19,24 +19,21 @@ export const buildDefaultElementTextAttrs = () => ({
   padding: DEFAULT_PADDING,
   textAlign: "center",
   color: DEFAULT_COLOR,
-  backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR,
-  textContent: "Lorem ipsum"
+  backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR
 });
 
 export const buildDefaultElementButtonAttrs = () => ({
   padding: DEFAULT_PADDING,
   textAlign: "center",
   color: DEFAULT_COLOR,
-  backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR,
-  buttonText: "Lorem ipsum"
+  backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR
 });
 
 export const buildDefaultElementImageAttrs = () => ({
   padding: DEFAULT_PADDING,
   textAlign: "center",
   color: DEFAULT_COLOR,
-  backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR,
-  imageSrc: "https://via.placeholder.com/100x100"
+  backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR
 });
 
 export const createDefaultContent = () => ({
@@ -55,10 +52,8 @@ export const createDefaultContent = () => ({
               id: nextGlobalId(),
               name: "element",
               type: "image",
-              attrs: {
-                ...buildDefaultElementImageAttrs(),
-                imageSrc: "https://via.placeholder.com/400x100?text=You Logo here"
-              }
+              attrs: buildDefaultElementImageAttrs(),
+              imageSrc: "https://via.placeholder.com/400x100?text=You Logo here"
             }
           ]
         }
@@ -80,16 +75,17 @@ export const createDefaultContent = () => ({
               type: "text",
               attrs: {
                 ...buildDefaultElementTextAttrs(),
-                textAlign: "left",
-                textContent: `
-              <h2>This is a title</h2>
-              
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam at, nihil quas harum mollitia dolores odio. Inventore delectus nihil soluta quos, magni doloribus, 
-              voluptas aspernatur explicabo atque perspiciatis possimus voluptates.
-              </p>
-              
-              <a href="#">Learn more</a>`
-              }
+                textAlign: "left"
+              },
+              textContent: `
+                <h2>This is a title</h2>
+                
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam at, nihil quas harum mollitia dolores odio. Inventore delectus nihil soluta quos, magni doloribus, 
+                voluptas aspernatur explicabo atque perspiciatis possimus voluptates.
+                </p>
+                
+                <a href="#">Learn more</a>
+              `
             }
           ]
         },
@@ -102,10 +98,8 @@ export const createDefaultContent = () => ({
               id: nextGlobalId(),
               name: "element",
               type: "image",
-              attrs: {
-                ...buildDefaultElementImageAttrs(),
-                imageSrc: "https://via.placeholder.com/220x200"
-              }
+              attrs: buildDefaultElementImageAttrs(),
+              imageSrc: "https://via.placeholder.com/220x200"
             }
           ]
         }
@@ -127,16 +121,15 @@ export const createDefaultContent = () => ({
               type: "text",
               attrs: {
                 ...buildDefaultElementTextAttrs(),
-                textAlign: "left",
-                textContent:
-                  `<h2>Sub Section Title</h2>
-                  
-                  <p>
-                  Sub Section Title
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod eum eius numquam sint dolore voluptatibus beatae ab ad, dignissimos fugiat? Nisi odio commodi debitis eveniet tenetur provident aliquid tempora placeat.
-                  </p>
-                  `
-              }
+                textAlign: "left"
+              },
+              textContent: `
+                <h2>Sub Section Title</h2>
+                <p>
+                Sub Section Title
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod eum eius numquam sint dolore voluptatibus beatae ab ad, dignissimos fugiat? Nisi odio commodi debitis eveniet tenetur provident aliquid tempora placeat.
+                </p>
+              `
             }
           ]
         },
@@ -151,19 +144,18 @@ export const createDefaultContent = () => ({
               type: "text",
               attrs: {
                 ...buildDefaultElementTextAttrs(),
-                textAlign: "left",
-                textContent:
-                  `<h2>Sub Section Title</h2>
-                  
-                  <p>
-                  Sub Section Title
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod eum eius numquam sint dolore voluptatibus beatae ab ad, dignissimos fugiat? Nisi odio commodi debitis eveniet tenetur provident aliquid tempora placeat.
-                  </p>
-                  `
-              }
+                textAlign: "left"
+              },
+              textContent: `
+                <h2>Sub Section Title</h2>
+                <p>
+                Sub Section Title
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod eum eius numquam sint dolore voluptatibus beatae ab ad, dignissimos fugiat? Nisi odio commodi debitis eveniet tenetur provident aliquid tempora placeat.
+                </p>
+                `
             }
           ]
-        },
+        }
       ]
     },
     {
@@ -182,15 +174,14 @@ export const createDefaultContent = () => ({
               type: "text",
               attrs: {
                 ...buildDefaultElementTextAttrs(),
-                textAlign: "left",
-                textContent:
-                  ` 
+                textAlign: "left"
+              },
+              textContent: ` 
                 <p>
                   You received this email because you're signed up to receive updates from us
                 </p>
                 <a href="#">Click here to unsubscribe</a>
-                `
-              }
+              `
             }
           ]
         }
@@ -217,6 +208,7 @@ export const buildBlock = columnCount => {
           id: 1,
           name: "element",
           type: "text",
+          textContent: "Lorem ipsum",
           attrs: buildDefaultElementTextAttrs()
         }
       ]
@@ -232,19 +224,24 @@ export const buildBlock = columnCount => {
 };
 
 export const buildElement = type => {
-  let attrs = {}
+  let attrs = {};
+  let typeProps = {};
   if (type === "text") {
     attrs = buildDefaultElementTextAttrs();
+    typeProps = { textContent: "Lorem ipsum" };
   } else if (type === "button") {
     attrs = buildDefaultElementButtonAttrs();
+    typeProps = { buttonText: "Press me" };
   } else if (type === "image") {
     attrs = buildDefaultElementImageAttrs();
+    typeProps = { imageSrc: "https://via.placeholder.com/100x100" };
   }
 
   return {
     id: nextGlobalId(),
     name: "element",
     type,
-    attrs
-  }
-}
+    attrs,
+    ...typeProps
+  };
+};

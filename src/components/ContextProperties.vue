@@ -11,15 +11,15 @@
 
     <div v-if="selectedObject && selectedObject.name == 'element'">
       <b-form-group v-if="selectedObject.type == 'text'" label="Text Content">
-        <RichTextEditor v-model="selectedObject.attrs.textContent" />
+        <RichTextEditor v-model="selectedObject.textContent" />
       </b-form-group>
 
       <b-form-group v-if="selectedObject.type == 'button'" label="Button Text">
-        <b-form-input v-model="selectedObject.attrs.buttonText" />
+        <b-form-input v-model="selectedObject.buttonText" />
       </b-form-group>
 
       <b-form-group v-if="selectedObject.type == 'image'" label="Image Src">
-        <b-form-input v-model="selectedObject.attrs.imageSrc" />
+        <b-form-input v-model="selectedObject.imageSrc" />
       </b-form-group>
 
       <hr />

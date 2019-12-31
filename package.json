@@ -14,6 +14,8 @@
     "bootstrap-vue": "^2.1.0",
     "core-js": "^3.4.3",
     "lodash": "^4.17.15",
+    "mjml": "^4.5.1",
+    "mjml4-in-browser": "^1.1.2",
     "sass": "^1.23.7",
     "tiptap": "^1.26.6",
     "tiptap-extensions": "^1.28.6",

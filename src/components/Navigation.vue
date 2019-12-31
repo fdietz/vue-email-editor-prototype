@@ -2,12 +2,20 @@
   <div class="navigation">
     Email Editor
 
-    <b-button variant="primary" class="ml-auto">Preview</b-button>
+    <b-button @click="generatePreview" variant="primary" class="ml-auto">Preview</b-button>
   </div>
 </template>
 
 <script>
-export default {};
+import { EventBus } from "@/EventBus";
+
+export default {
+  methods: {
+    generatePreview(){
+      EventBus.$emit("generate:preview");
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

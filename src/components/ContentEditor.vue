@@ -76,10 +76,10 @@
                   v-if="element.type == 'image'"
                   class="element-image"
                   :style="elementStyles(element)"
-                ><img :src="element.attrs.imageSrc"></div>
+                ><img :src="element.imageSrc"></div>
                 <div
                   v-if="element.type == 'text'"
-                  v-html="element.attrs.textContent"
+                  v-html="element.textContent"
                   class="element-text"
                   :style="elementStyles(element)"
                 ></div>
@@ -89,7 +89,7 @@
                   :style="elementStyles(element)"
                 >
                   <b-button variant="primary">{{
-                    element.attrs.buttonText
+                    element.buttonText
                   }}</b-button>
                 </div>
               </div>
@@ -114,12 +114,18 @@
         </div>
       </div>
     </draggable>
+
+    <b-modal id="modal-preview" size="xl" title="Preview">
+      <iframe ref="iframe" frameborder="0"></iframe>
+    </b-modal>
   </div>
 </template>
 
 <script>
 import draggable from "vuedraggable";
 import { debounce } from 'lodash'
+import { EventBus } from "@/EventBus";
+import { generateMjmlPreview } from '@/mjml';
 
 export default {
   components: {
@@ -139,10 +145,17 @@ export default {
       type: Object
     }
   },
+  mounted() {
+    EventBus.$on("generate:preview", () => {
+      this.generatePreview();
+    })
+  },
   data() {
     return {
       draggableInProgress: false,
-      dragOverForBlock: null
+      dragOverForBlock: null,
+      htmlContent: null,
+      iFrameSrc: null
     };
   },
   methods: {
@@ -197,6 +210,20 @@ export default {
     },
     isDragOverForBlock(block) {
       return this.dragOverForBlock && this.dragOverForBlock.id === block.id;
+    },
+    generatePreview() {
+      this.htmlContent = generateMjmlPreview(this.content);
+      console.log(this.htmlContent)
+      // this.iFrameSrc = "data:text/html;charset=utf-8," + escape(this.htmlContent);
+      // this.$refs.iframe.document.write(this.htmlContent);
+
+      var win = window.open();
+      win.document.body.innerHTML = this.htmlContent;
+
+      // console.log(this.htmlContent)
+      // var win = window.open("", "Title", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=780,height=200,top="+(screen.height-400)+",left="+(screen.width-840));
+      // win.document.body.innerHTML = this.htmlContent;
+
     }
   }
 };
