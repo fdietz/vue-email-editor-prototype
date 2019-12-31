@@ -14,9 +14,22 @@ const buildBodyAttrs = content => {
   return buildAttrsString({ color: "#555", fontFamily: "Arial, sans-serif" });
 };
 
+const buildHead = content => {
+  const fontFamily = `Roboto, sans-serif`;
+  return `
+  <mj-attributes>
+    <mj-class name="blue" color="blue" />
+    <mj-class name="big" font-size="20px" />
+    <mj-all font-family="${fontFamily}" font-size="16px" />
+  </mj-attributes>
+  `;
+};
 const buildBody = content => {
   return `
     <mjml>
+      <mj-head>
+        ${buildHead(content)}
+      </mj-head>
       <mj-body ${buildBodyAttrs(content)}>${buildSectionArray(
     content.children
   )}</mj-body>

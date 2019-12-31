@@ -213,17 +213,8 @@ export default {
     },
     generatePreview() {
       this.htmlContent = generateMjmlPreview(this.content);
-      console.log(this.htmlContent)
-      // this.iFrameSrc = "data:text/html;charset=utf-8," + escape(this.htmlContent);
-      // this.$refs.iframe.document.write(this.htmlContent);
-
       var win = window.open();
       win.document.body.innerHTML = this.htmlContent;
-
-      // console.log(this.htmlContent)
-      // var win = window.open("", "Title", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=780,height=200,top="+(screen.height-400)+",left="+(screen.width-840));
-      // win.document.body.innerHTML = this.htmlContent;
-
     }
   }
 };
