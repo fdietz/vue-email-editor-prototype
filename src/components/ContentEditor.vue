@@ -16,9 +16,15 @@
         @click="handleSelectionChanged(block)"
         @dragover="handleDragOverForBlock(block)"
         @dragleave="handleDragLeaveForBlock(block)"
+        @mouseover="handleMouseOverForBlock(block)"
+        @mouseleave="handleMouseLeaveForBlock(block)"
         class="block"
         :class="{
           'drag-over': isDragOverForBlock(block),
+          'hover-over':
+            mouseOverForBlock &&
+            mouseOverForBlock.id === block.id &&
+            !mouseOverForElement,
           selected:
             !currentColumn && currentBlock && currentBlock.id === block.id
         }"
@@ -50,8 +56,13 @@
                 v-for="element in column.children"
                 :key="element.id"
                 @click.stop="handleSelectionChanged(block, column, element)"
+                @mouseover="handleMouseOverForElement(element)"
+                @mouseleave="handleMouseLeaveForElement(element)"
                 class="element"
                 :class="{
+                  'hover-over':
+                    mouseOverForElement &&
+                    mouseOverForElement.id === element.id,
                   selected:
                     currentElement &&
                     currentColumn &&
@@ -130,7 +141,7 @@
 
 <script>
 import draggable from "vuedraggable";
-import { debounce } from "lodash";
+import { debounce, throttle } from "lodash";
 import { EventBus } from "@/EventBus";
 import { generateMjmlPreview } from "@/mjml";
 
@@ -161,6 +172,8 @@ export default {
     return {
       draggableInProgress: false,
       dragOverForBlock: null,
+      mouseOverForBlock: null,
+      mouseOverForElement: null,
       htmlContent: null,
       iFrameSrc: null
     };
@@ -225,6 +238,18 @@ export default {
     isDragOverForBlock(block) {
       return this.dragOverForBlock && this.dragOverForBlock.id === block.id;
     },
+    handleMouseOverForBlock: throttle(function handle(block) {
+      this.mouseOverForBlock = block;
+    }, 100),
+    handleMouseLeaveForBlock(block) {
+      this.mouseOverForBlock = null;
+    },
+    handleMouseOverForElement: throttle(function handle(element) {
+      this.mouseOverForElement = element;
+    }, 100),
+    handleMouseLeaveForElement(element) {
+      this.mouseOverForElement = null;
+    },
     generatePreview() {
       this.htmlContent = generateMjmlPreview(this.content);
       var win = window.open();
@@ -252,7 +277,7 @@ $column-border-color: $secondary;
   flex-direction: column;
   cursor: pointer;
 
-  &:hover,
+  &.hover-over,
   &.selected {
     > .border-wrapper {
       display: flex;
@@ -315,7 +340,6 @@ $column-border-color: $secondary;
   display: none;
 
   border: 2px solid red;
-  // border-color: inherit;
   border-radius: 2px;
   border-style: dashed;
 }
@@ -354,7 +378,7 @@ $column-border-color: $secondary;
 
   overflow: hidden;
 
-  &:hover,
+  &.hover-over,
   &.selected {
     > .border-wrapper {
       display: flex;
