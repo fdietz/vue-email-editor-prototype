@@ -5,7 +5,7 @@
       :list="content.children"
       group="blocks"
       draggable=".block"
-      :forceFallback="true"
+      :forceFallback="false"
       @change="log"
       @start="handleDraggableStart"
       @end="handleDraggableEnd"
@@ -115,7 +115,7 @@
             </draggable>
             <draggable
               v-else
-              class="dragArea column-children"
+              class="dragArea column-children element-placeholder"
               draggable=".element"
               :list="column.children"
               :group="{ name: 'elements', pull: false, put: ['elements'] }"
@@ -124,10 +124,8 @@
               @end="handleDraggableEnd"
               @add="handleDraggableAdd"
               :class="{ dragging: draggableInProgress }"
+              :style="{ minHeight: '100px' }"
             >
-              <div class="element">
-                <div class="element-placeholder">Drop some element here</div>
-              </div>
             </draggable>
           </div>
         </div>
@@ -423,22 +421,27 @@ $column-border-color: $secondary;
 .element-placeholder {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  // align-items: center;
+  // justify-content: center;
 
   width: 100%;
-  min-height: 120px;
+  // min-height: 120px;
 
   text-align: center;
   border: 2px dashed #efefef;
 
-  font-style: italic;
+  // font-style: italic;
   border-radius: 3px;
 }
 
 .dragging {
-  .border-wrapper {
-    display: none !important;
+  .block-border-wrapper {
+    display: flex !important;
+    // border-style: dashed;
+    border-bottom: transparent;
+  }
+  .element-border-wrapper {
+    display: flex !important;
   }
 }
 
@@ -446,7 +449,7 @@ $column-border-color: $secondary;
   .block {
     &.drag-over {
       > .draggable-wrapper {
-        display: flex !important;
+        // display: flex !important;
       }
     }
   }
