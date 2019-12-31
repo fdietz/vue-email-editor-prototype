@@ -1,7 +1,9 @@
 const DEFAULT_PADDING = 20;
 const DEFAULT_COLOR = "#555";
+const DEFAULT_BRAND_COLOR = "#18a0fa";
 const DEFAULT_BACKGROUND_COLOR = "#fff";
 const DEFAULT_ELEMENT_BACKGROUND_COLOR = "transparent";
+const DEFAULT_ELEMENT_BUTTON_BACKGROUND_COLOR = DEFAULT_BRAND_COLOR;
 
 let globalId = 100;
 
@@ -15,29 +17,35 @@ export const buildDefaultColumnAttrs = () => ({
   alignSelf: "center"
 });
 
-export const buildDefaultElementTextAttrs = () => ({
+export const buildDefaultElementAttrs = () => ({
   padding: DEFAULT_PADDING,
   textAlign: "center",
   color: DEFAULT_COLOR,
-  backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR
+  containerBackgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR
 });
 
-export const buildDefaultElementButtonAttrs = () => ({
-  padding: DEFAULT_PADDING,
-  textAlign: "center",
-  color: DEFAULT_COLOR,
-  backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR,
-  href: "https://example.com"
-});
+export const buildDefaultElementTextAttrs = () => {
+  return buildDefaultElementAttrs();
+};
 
-export const buildDefaultElementImageAttrs = () => ({
-  padding: DEFAULT_PADDING,
-  textAlign: "center",
-  color: DEFAULT_COLOR,
-  backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR,
-  src: "https://via.placeholder.com/100x100",
-  href: "https://example.com"
-});
+export const buildDefaultElementButtonAttrs = () => {
+  return {
+    ...buildDefaultElementAttrs(),
+    color: "#fff",
+    backgroundColor: DEFAULT_ELEMENT_BUTTON_BACKGROUND_COLOR,
+    href: "https://example.com"
+  };
+};
+
+export const buildDefaultElementImageAttrs = () => {
+  return {
+    ...buildDefaultElementAttrs(),
+    src: "https://via.placeholder.com/100x100",
+    href: "https://example.com",
+    width: "",
+    height: ""
+  };
+};
 
 export const createDefaultContent = () => ({
   children: [

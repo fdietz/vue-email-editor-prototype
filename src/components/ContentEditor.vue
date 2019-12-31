@@ -75,22 +75,29 @@
                 <div
                   v-if="element.type == 'image'"
                   class="element-image"
-                  :style="elementStyles(element)"
-                ><img :src="element.attrs.src"></div>
+                  :style="elementContainerStyles(element)"
+                >
+                  <img
+                    :src="element.attrs.src"
+                    :style="imageElementStyles(element)"
+                  />
+                </div>
                 <div
                   v-if="element.type == 'text'"
                   v-html="element.content"
                   class="element-text"
-                  :style="elementStyles(element)"
+                  :style="elementContainerStyles(element)"
                 ></div>
                 <div
                   v-if="element.type == 'button'"
                   class="element-button"
-                  :style="elementStyles(element)"
+                  :style="elementContainerStyles(element)"
                 >
-                  <b-button variant="primary">{{
-                    element.content
-                  }}</b-button>
+                  <b-button
+                    variant="primary"
+                    :style="buttonElementStyles(element)"
+                    >{{ element.content }}</b-button
+                  >
                 </div>
               </div>
             </draggable>
@@ -123,9 +130,9 @@
 
 <script>
 import draggable from "vuedraggable";
-import { debounce } from 'lodash'
+import { debounce } from "lodash";
 import { EventBus } from "@/EventBus";
-import { generateMjmlPreview } from '@/mjml';
+import { generateMjmlPreview } from "@/mjml";
 
 export default {
   components: {
@@ -148,7 +155,7 @@ export default {
   mounted() {
     EventBus.$on("generate:preview", () => {
       this.generatePreview();
-    })
+    });
   },
   data() {
     return {
@@ -168,24 +175,31 @@ export default {
     removeBlock(block) {
       this.$emit("remove-block", { block });
     },
-    columnStyles({ attrs = {} }) {
-      return {
-        padding: `${attrs.padding}px`,
-        alignSelf: `${attrs.alignSelf || "center"}`
-      };
-    },
     blockStyles({ attrs = {} }) {
       return {
         padding: `${attrs.padding}px`,
         backgroundColor: `${attrs.backgroundColor}`
       };
     },
-    elementStyles({ attrs = {} }) {
+    elementContainerStyles({ attrs = {} }) {
       return {
         padding: `${attrs.padding}px`,
-        color: `${attrs.color}`,
-        backgroundColor: `${attrs.backgroundColor}`,
-        textAlign: `${attrs.textAlign}`
+        color: attrs.color,
+        backgroundColor: attrs.containerBackgroundColor,
+        textAlign: attrs.textAlign
+      };
+    },
+    buttonElementStyles({ attrs = {} }) {
+      return {
+        color: attrs.color,
+        backgroundColor: attrs.backgroundColor,
+        width: `${attrs.width}px`
+      };
+    },
+    imageElementStyles({ attrs = {} }) {
+      return {
+        width: `${attrs.width}px`,
+        height: `${attrs.height}px`
       };
     },
     log: function(evt) {
@@ -319,11 +333,14 @@ $column-border-color: $secondary;
   flex: 1 1;
 
   min-height: 50px;
+  overflow: hidden;
 
   .column-children {
     display: flex;
     flex-direction: column;
     flex: 1 1;
+
+    overflow: hidden;
   }
 }
 
