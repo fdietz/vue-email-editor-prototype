@@ -1,5 +1,5 @@
 <template>
-  <div class="content-editor">
+  <div class="content-editor" :class="{ dragging: draggableInProgress }">
     <draggable
       class="dragArea"
       :list="content.children"
@@ -9,14 +9,16 @@
       @start="handleDraggableStart"
       @end="handleDraggableEnd"
       @add="handleDraggableAdd"
-      :class="{ dragging: draggableInProgress }"
     >
       <div
         v-for="block in content.children"
         :key="block.id"
         @click="handleSelectionChanged(block)"
+        @dragover="handleDragOverForBlock(block)"
+        @dragleave="handleDragLeaveForBlock(block)"
         class="block"
         :class="{
+          'drag-over': isDragOverForBlock(block),
           selected:
             !currentColumn && currentBlock && currentBlock.id === block.id
         }"
@@ -117,6 +119,7 @@
 
 <script>
 import draggable from "vuedraggable";
+import { debounce } from 'lodash'
 
 export default {
   components: {
@@ -138,7 +141,8 @@ export default {
   },
   data() {
     return {
-      draggableInProgress: false
+      draggableInProgress: false,
+      dragOverForBlock: null
     };
   },
   methods: {
@@ -175,16 +179,24 @@ export default {
       window.console.log(evt);
     },
     handleDraggableStart() {
-      console.log("start");
       this.draggableInProgress = true;
     },
     handleDraggableEnd() {
-      console.log("end");
       this.draggableInProgress = false;
+      this.dragOverForBlock = null;
     },
     handleDraggableAdd() {
-      console.log("add");
       this.draggableInProgress = false;
+      this.dragOverForBlock = null;
+    },
+    handleDragOverForBlock: debounce(function handle(block) {
+      this.dragOverForBlock = block;
+    }, 100),
+    handleDragLeaveForBlock() {
+      this.dragOverForBlock = null;
+    },
+    isDragOverForBlock(block) {
+      return this.dragOverForBlock && this.dragOverForBlock.id === block.id;
     }
   }
 };
@@ -357,6 +369,16 @@ $column-border-color: $secondary;
 .dragging {
   .border-wrapper {
     display: none !important;
+  }
+}
+
+.dragging {
+  .block {
+    &.drag-over {
+      > .border-wrapper {
+        display: flex !important;
+      }
+    }
   }
 }
 </style>
