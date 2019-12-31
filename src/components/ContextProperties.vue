@@ -11,17 +11,22 @@
 
     <div v-if="selectedObject && selectedObject.name == 'element'">
       <b-form-group v-if="selectedObject.type == 'text'" label="Text Content">
-        <RichTextEditor v-model="selectedObject.textContent" />
+        <RichTextEditor v-model="selectedObject.content" />
       </b-form-group>
 
       <b-form-group v-if="selectedObject.type == 'button'" label="Button Text">
-        <b-form-input v-model="selectedObject.buttonText" />
+        <b-form-input v-model="selectedObject.content" />
+      </b-form-group>
+      <b-form-group v-if="selectedObject.type == 'button'" label="Button Href">
+        <b-form-input v-model="selectedObject.attrs.href" />
       </b-form-group>
 
       <b-form-group v-if="selectedObject.type == 'image'" label="Image Src">
-        <b-form-input v-model="selectedObject.imageSrc" />
+        <b-form-input v-model="selectedObject.attrs.src" />
       </b-form-group>
-
+      <b-form-group v-if="selectedObject.type == 'image'" label="Button Href">
+        <b-form-input v-model="selectedObject.attrs.href" />
+      </b-form-group>
       <hr />
 
       <b-form-group label="Padding">

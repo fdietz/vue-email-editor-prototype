@@ -20,8 +20,22 @@ const buildHead = content => {
   <mj-attributes>
     <mj-class name="blue" color="blue" />
     <mj-class name="big" font-size="20px" />
-    <mj-all font-family="${fontFamily}" font-size="16px" />
+    <mj-font name="Roboto, sans-serif" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
+    <mj-all font-family="${fontFamily}" font-size="16px" line-height="24px"/>
+    <mj-text font-size="16px" line-height="24px" />
+    <mj-button background-color="#18a0fa" color="#FFF" />
   </mj-attributes>
+  <mj-style inline="inline">
+    h2 {
+      font-size: 32px;
+      line-height: 38.4px;
+      font-weight: 500;
+    }
+    a {
+      color: #18a0fa;
+      text-decoration: none;
+    }
+  </mj-style>
   `;
 };
 const buildBody = content => {
@@ -80,16 +94,16 @@ const buildElement = element => {
   if (element.type === "text") {
     return `
     <mj-text ${buildElementAttrs(element.attrs)}>
-      ${element.textContent}
+      ${element.content}
     </mj-text>`;
   } else if (element.type === "image") {
     return `
-    <mj-image ${buildElementAttrs(element.attrs)} src="${element.imageSrc}">
+    <mj-image ${buildElementAttrs(element.attrs)}>
     </mj-image>`;
-  } else if (element.type === "body") {
+  } else if (element.type === "button") {
     return `
     <mj-button ${buildElementAttrs(element.attrs)}>
-      ${element.buttonText}
+      ${element.content}
     </mj-button>`;
   }
 };

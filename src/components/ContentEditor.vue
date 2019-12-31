@@ -76,10 +76,10 @@
                   v-if="element.type == 'image'"
                   class="element-image"
                   :style="elementStyles(element)"
-                ><img :src="element.imageSrc"></div>
+                ><img :src="element.attrs.src"></div>
                 <div
                   v-if="element.type == 'text'"
-                  v-html="element.textContent"
+                  v-html="element.content"
                   class="element-text"
                   :style="elementStyles(element)"
                 ></div>
@@ -89,7 +89,7 @@
                   :style="elementStyles(element)"
                 >
                   <b-button variant="primary">{{
-                    element.buttonText
+                    element.content
                   }}</b-button>
                 </div>
               </div>

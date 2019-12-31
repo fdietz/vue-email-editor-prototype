@@ -26,14 +26,17 @@ export const buildDefaultElementButtonAttrs = () => ({
   padding: DEFAULT_PADDING,
   textAlign: "center",
   color: DEFAULT_COLOR,
-  backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR
+  backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR,
+  href: "https://example.com"
 });
 
 export const buildDefaultElementImageAttrs = () => ({
   padding: DEFAULT_PADDING,
   textAlign: "center",
   color: DEFAULT_COLOR,
-  backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR
+  backgroundColor: DEFAULT_ELEMENT_BACKGROUND_COLOR,
+  src: "https://via.placeholder.com/100x100",
+  href: "https://example.com"
 });
 
 export const createDefaultContent = () => ({
@@ -52,8 +55,10 @@ export const createDefaultContent = () => ({
               id: nextGlobalId(),
               name: "element",
               type: "image",
-              attrs: buildDefaultElementImageAttrs(),
-              imageSrc: "https://via.placeholder.com/400x100?text=You Logo here"
+              attrs: {
+                ...buildDefaultElementImageAttrs(),
+                src: "https://via.placeholder.com/400x100?text=You Logo here"
+              }
             }
           ]
         }
@@ -77,7 +82,7 @@ export const createDefaultContent = () => ({
                 ...buildDefaultElementTextAttrs(),
                 textAlign: "left"
               },
-              textContent: `
+              content: `
                 <h2>This is a title</h2>
                 
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam at, nihil quas harum mollitia dolores odio. Inventore delectus nihil soluta quos, magni doloribus, 
@@ -98,8 +103,10 @@ export const createDefaultContent = () => ({
               id: nextGlobalId(),
               name: "element",
               type: "image",
-              attrs: buildDefaultElementImageAttrs(),
-              imageSrc: "https://via.placeholder.com/220x200"
+              attrs: {
+                ...buildDefaultElementImageAttrs(),
+                src: "https://via.placeholder.com/220x200"
+              }
             }
           ]
         }
@@ -123,7 +130,7 @@ export const createDefaultContent = () => ({
                 ...buildDefaultElementTextAttrs(),
                 textAlign: "left"
               },
-              textContent: `
+              content: `
                 <h2>Sub Section Title</h2>
                 <p>
                 Sub Section Title
@@ -146,7 +153,7 @@ export const createDefaultContent = () => ({
                 ...buildDefaultElementTextAttrs(),
                 textAlign: "left"
               },
-              textContent: `
+              content: `
                 <h2>Sub Section Title</h2>
                 <p>
                 Sub Section Title
@@ -176,7 +183,7 @@ export const createDefaultContent = () => ({
                 ...buildDefaultElementTextAttrs(),
                 textAlign: "left"
               },
-              textContent: ` 
+              content: ` 
                 <p>
                   You received this email because you're signed up to receive updates from us
                 </p>
@@ -208,7 +215,7 @@ export const buildBlock = columnCount => {
           id: 1,
           name: "element",
           type: "text",
-          textContent: "Lorem ipsum",
+          content: "Lorem ipsum",
           attrs: buildDefaultElementTextAttrs()
         }
       ]
@@ -228,10 +235,10 @@ export const buildElement = type => {
   let typeProps = {};
   if (type === "text") {
     attrs = buildDefaultElementTextAttrs();
-    typeProps = { textContent: "Lorem ipsum" };
+    typeProps = { content: "Lorem ipsum" };
   } else if (type === "button") {
     attrs = buildDefaultElementButtonAttrs();
-    typeProps = { buttonText: "Press me" };
+    typeProps = { content: "Press me" };
   } else if (type === "image") {
     attrs = buildDefaultElementImageAttrs();
     typeProps = { imageSrc: "https://via.placeholder.com/100x100" };
