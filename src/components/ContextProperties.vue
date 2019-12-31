@@ -78,9 +78,11 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import "../styles/variables.scss";
+
 .context-properties {
-  border-left: 1px solid #e8e8ef;
+  border-left: 1px solid $border-color;
   padding: 1rem;
 }
 </style>

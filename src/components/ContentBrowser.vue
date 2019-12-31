@@ -105,7 +105,7 @@ export default {
 $block-border-color: $primary;
 
 .content-browser {
-  border-right: 1px solid #e8e8ef;
+  border-right: 1px solid $border-color;
   padding: 1rem;
 }
 
@@ -118,11 +118,15 @@ $block-border-color: $primary;
 .block-item {
   display: flex;
   padding: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid $border-color;
   border-radius: 3px;
   margin-bottom: 0.5rem;
 
   cursor: pointer;
+
+  &:hover {
+    background-color: lighten($border-color, 5%);
+  }
 
   &.sortable-ghost {
     align-items: center;
@@ -137,12 +141,16 @@ $block-border-color: $primary;
 .element-item {
   display: flex;
   padding: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid $border-color;
   border-radius: 3px;
   margin-bottom: 0.5rem;
 
   cursor: pointer;
 
+  &:hover {
+    background-color: lighten($border-color, 5%);
+  }
+  
   &.sortable-ghost {
     align-items: center;
     justify-content: center;

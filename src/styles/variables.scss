@@ -1,9 +1,18 @@
 $primary: #18a0fa;
 $secondary: #6c757d;
 
+$brand-primary: #18a0fa;
+
 $body-color: #555;
+
+$border-color: #e8e8ef;
 
 $font-family: "Nunito";
 $font-family-sans-serif: "Nunito";
 
 $h5-font-size: 0.8rem;
+
+$border-radius-base: 3px;
+
+$input-border: $border-color;
+$input-border-radius: $border-radius-base 
