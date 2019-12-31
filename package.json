@@ -20,6 +20,7 @@
     "tiptap": "^1.26.6",
     "tiptap-extensions": "^1.28.6",
     "vue": "^2.6.10",
+    "vue2-editor": "^2.10.2",
     "vuedraggable": "^2.23.2"
   },
   "devDependencies": {

@@ -13,6 +13,10 @@
       <template v-if="selectedObject.type == 'text'">
         <b-form-group label="Text Content">
           <RichTextEditor v-model="selectedObject.content" />
+          <vue-editor
+            v-model="selectedObject.content"
+            :editorToolbar="customToolbar"
+          ></vue-editor>
         </b-form-group>
       </template>
 
@@ -76,11 +80,13 @@
 </template>
 
 <script>
+import { VueEditor } from "vue2-editor";
 import RichTextEditor from "./RichTextEditor.vue";
 
 export default {
   components: {
-    RichTextEditor
+    RichTextEditor,
+    VueEditor
   },
   props: {
     selectedObject: {
@@ -99,6 +105,13 @@ export default {
         { value: "left", text: "Left" },
         { value: "center", text: "Center" },
         { value: "right", text: "Right" }
+      ],
+      customToolbar: [
+        [{ header: [1, 2, 3] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ color: [] }, { background: [] }],
+        [{ list: "ordered" }, { list: "bullet" }, { align: [] }],
+        ["link"]
       ]
     };
   }
