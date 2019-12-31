@@ -33,7 +33,10 @@
         <div class="border-wrapper block-border-wrapper">
           <div class="border-label">Block {{ block.id }}</div>
           <div class="border-action">
-            <b-button variant="naked" @click.stop="removeBlock(block)"
+            <b-button
+              variant="naked"
+              class="text-primary"
+              @click.stop="removeBlock(block)"
               ><font-awesome-icon icon="times"
             /></b-button>
           </div>
@@ -77,7 +80,7 @@
                   <div class="border-action">
                     <b-button
                       variant="naked"
-                      size="sm"
+                      class="text-secondary"
                       @click.stop="removeElement(block, column, element)"
                       ><font-awesome-icon icon="times"
                     /></b-button>
@@ -295,15 +298,6 @@ $column-border-color: $secondary;
     margin: 0px auto;
   }
 
-  &.sortable-ghost {
-    > .draggable-wrapper {
-      // display: flex;
-    }
-    > .border-wrapper {
-      // display: none;
-    }
-  }
-
   &.sortable-drag {
     border: 2px solid $block-border-color;
   }
@@ -421,37 +415,21 @@ $column-border-color: $secondary;
 .element-placeholder {
   display: flex;
   flex-direction: column;
-  // align-items: center;
-  // justify-content: center;
-
   width: 100%;
-  // min-height: 120px;
 
   text-align: center;
   border: 2px dashed #efefef;
 
-  // font-style: italic;
   border-radius: 3px;
 }
 
 .dragging {
   .block-border-wrapper {
     display: flex !important;
-    // border-style: dashed;
     border-bottom: transparent;
   }
   .element-border-wrapper {
     display: flex !important;
-  }
-}
-
-.dragging {
-  .block {
-    &.drag-over {
-      > .draggable-wrapper {
-        // display: flex !important;
-      }
-    }
   }
 }
 </style>
