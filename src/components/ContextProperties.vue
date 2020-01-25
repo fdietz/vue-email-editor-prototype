@@ -12,7 +12,7 @@
     <div v-if="selectedObject && selectedObject.name == 'element'">
       <template v-if="selectedObject.type == 'text'">
         <b-form-group label="Text Content">
-          <RichTextEditor v-model="selectedObject.content" />
+          <!-- <RichTextEditor v-model="selectedObject.content" /> -->
           <vue-editor
             v-model="selectedObject.content"
             :editorToolbar="customToolbar"

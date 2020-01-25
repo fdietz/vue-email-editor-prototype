@@ -90,15 +90,12 @@ export const createDefaultContent = () => ({
                 ...buildDefaultElementTextAttrs(),
                 textAlign: "left"
               },
-              content: `
-                <h2>This is a title</h2>
-                
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam at, nihil quas harum mollitia dolores odio. Inventore delectus nihil soluta quos, magni doloribus, 
-                voluptas aspernatur explicabo atque perspiciatis possimus voluptates.
+              content: `<h2>This is a title</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam at, nihil quas harum mollitia dolores odio. Inventore delectus nihil soluta quos, magni doloribus, voluptas aspernatur explicabo atque perspiciatis possimus voluptates.
                 </p>
                 
                 <a href="#">Learn more</a>
-              `
+              `.replace(/>\s+</g, "><")
             }
           ]
         },
@@ -144,7 +141,7 @@ export const createDefaultContent = () => ({
                 Sub Section Title
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod eum eius numquam sint dolore voluptatibus beatae ab ad, dignissimos fugiat? Nisi odio commodi debitis eveniet tenetur provident aliquid tempora placeat.
                 </p>
-              `
+              `.replace(/>\s+</g, "><")
             }
           ]
         },
@@ -167,7 +164,7 @@ export const createDefaultContent = () => ({
                 Sub Section Title
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod eum eius numquam sint dolore voluptatibus beatae ab ad, dignissimos fugiat? Nisi odio commodi debitis eveniet tenetur provident aliquid tempora placeat.
                 </p>
-                `
+                `.replace(/>\s+</g, "><")
             }
           ]
         }
@@ -196,7 +193,7 @@ export const createDefaultContent = () => ({
                   You received this email because you're signed up to receive updates from us
                 </p>
                 <a href="#">Click here to unsubscribe</a>
-              `
+              `.replace(/>\s+</g, "><")
             }
           ]
         }
