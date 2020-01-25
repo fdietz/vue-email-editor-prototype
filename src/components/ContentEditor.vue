@@ -1,31 +1,27 @@
 <template>
-  <div class="content-editor" :class="{ dragging: draggableInProgress }">
+  <div
+    class="content-editor"
+    :class="{
+      'dragging-block': draggableBlockInProgress,
+      'dragging-element': draggableElementInProgress
+    }"
+  >
     <draggable
       class="dragArea"
       :list="content.children"
-      group="blocks"
+      :group="{ name: 'blocks' }"
       draggable=".block"
       :forceFallback="false"
-      @change="log"
-      @start="handleDraggableStart"
-      @end="handleDraggableEnd"
-      @add="handleDraggableAdd"
+      @start="handleDraggableBlockStart"
+      @end="handleDraggableBlockEnd"
+      @add="handleDraggableBlockAdd"
     >
       <div
         v-for="block in content.children"
         :key="block.id"
         @click="handleSelectionChanged(block)"
-        @dragover="handleDragOverForBlock(block)"
-        @dragleave="handleDragLeaveForBlock(block)"
-        @mouseover="handleMouseOverForBlock(block)"
-        @mouseleave="handleMouseLeaveForBlock(block)"
         class="block"
         :class="{
-          'drag-over': isDragOverForBlock(block),
-          'hover-over':
-            mouseOverForBlock &&
-            mouseOverForBlock.id === block.id &&
-            !mouseOverForElement,
           selected:
             !currentColumn && currentBlock && currentBlock.id === block.id
         }"
@@ -50,23 +46,17 @@
               draggable=".element"
               :list="column.children"
               :group="{ name: 'elements', pull: true, put: ['elements'] }"
-              @change="log"
-              @start="handleDraggableStart"
-              @end="handleDraggableEnd"
-              @add="handleDraggableAdd"
-              :class="{ dragging: draggableInProgress }"
+              @start="handleDraggableElementStart"
+              @end="handleDraggableElementEnd"
+              @add="handleDraggableElementAdd"
+              :class="{ dragging: draggableElementInProgress }"
             >
               <div
                 v-for="element in column.children"
                 :key="element.id"
                 @click.stop="handleSelectionChanged(block, column, element)"
-                @mouseover="handleMouseOverForElement(element)"
-                @mouseleave="handleMouseLeaveForElement(element)"
                 class="element"
                 :class="{
-                  'hover-over':
-                    mouseOverForElement &&
-                    mouseOverForElement.id === element.id,
                   selected:
                     currentElement &&
                     currentColumn &&
@@ -122,11 +112,10 @@
               draggable=".element"
               :list="column.children"
               :group="{ name: 'elements', pull: false, put: ['elements'] }"
-              @change="log"
-              @start="handleDraggableStart"
-              @end="handleDraggableEnd"
-              @add="handleDraggableAdd"
-              :class="{ dragging: draggableInProgress }"
+              @start="handleDraggableElementStart"
+              @end="handleDraggableElementEnd"
+              @add="handleDraggableElementAdd"
+              :class="{ dragging: draggableElementInProgress }"
               :style="{ minHeight: '100px' }"
             >
             </draggable>
@@ -172,10 +161,8 @@ export default {
   },
   data() {
     return {
-      draggableInProgress: false,
-      dragOverForBlock: null,
-      mouseOverForBlock: null,
-      mouseOverForElement: null,
+      draggableBlockInProgress: false,
+      draggableElementInProgress: false,
       htmlContent: null,
       iFrameSrc: null
     };
@@ -217,44 +204,23 @@ export default {
         height: `${attrs.height}px`
       };
     },
-    log: function(evt) {
-      window.console.log(evt);
+    handleDraggableBlockStart() {
+      this.draggableBlockInProgress = true;
     },
-    handleDraggableStart() {
-      this.draggableInProgress = true;
+    handleDraggableBlockEnd() {
+      this.draggableBlockInProgress = false;
     },
-    handleDraggableEnd() {
-      this.draggableInProgress = false;
-      this.dragOverForBlock = null;
+    handleDraggableBlockAdd() {
+      this.draggableBlockInProgress = false;
     },
-    handleDraggableAdd() {
-      this.draggableInProgress = false;
-      this.dragOverForBlock = null;
+    handleDraggableElementStart() {
+      this.draggableElementInProgress = true;
     },
-    handleDragOverForBlock: debounce(function handle(block) {
-      console.log("drag over", block.id);
-      this.dragOverForBlock = block;
-    }, 100),
-    handleDragLeaveForBlock(block) {
-      console.log("drag leave", block.id);
-      this.dragOverForBlock = null;
+    handleDraggableElementEnd() {
+      this.draggableElementInProgress = false;
     },
-    isDragOverForBlock(block) {
-      return this.dragOverForBlock && this.dragOverForBlock.id === block.id;
-    },
-    handleMouseOverForBlock: throttle(function handle(block) {
-      console.log("mouse over", block.id);
-      this.mouseOverForBlock = block;
-    }, 100),
-    handleMouseLeaveForBlock(block) {
-      console.log("mouse leave", block.id);
-      this.mouseOverForBlock = null;
-    },
-    handleMouseOverForElement: throttle(function handle(element) {
-      this.mouseOverForElement = element;
-    }, 100),
-    handleMouseLeaveForElement(element) {
-      this.mouseOverForElement = null;
+    handleDraggableElementAdd() {
+      this.draggableElementInProgress = false;
     },
     generatePreview() {
       this.htmlContent = generateMjmlPreview(this.content);
@@ -281,11 +247,10 @@ $column-border-color: $secondary;
   position: relative;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
 
   overflow: hidden;
 
-  &.hover-over,
+  &:hover,
   &.selected {
     > .border-wrapper {
       display: flex;
@@ -298,8 +263,10 @@ $column-border-color: $secondary;
     margin: 0px auto;
   }
 
-  &.sortable-drag {
-    border: 2px solid $block-border-color;
+  &[draggable="true"] {
+    > .border-wrapper {
+      display: flex !important;
+    }
   }
 }
 
@@ -327,6 +294,14 @@ $column-border-color: $secondary;
   .border-action {
     margin-left: auto;
     margin-right: 0.5rem;
+  }
+
+  .border-handle {
+    cursor: move;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    background-color: $block-border-color;
   }
 }
 
@@ -374,23 +349,20 @@ $column-border-color: $secondary;
   display: flex;
   align-items: flex-start;
 
-  cursor: pointer;
+  // cursor: pointer;
 
   overflow: hidden;
 
-  &.hover-over,
+  &:hover,
   &.selected {
     > .border-wrapper {
       display: flex;
     }
   }
 
-  &.sortable-ghost {
-    > .draggable-wrapper {
-      display: flex;
-    }
+  &[draggable="true"] {
     > .border-wrapper {
-      display: none;
+      display: flex !important;
     }
   }
 }
@@ -423,13 +395,26 @@ $column-border-color: $secondary;
   border-radius: 3px;
 }
 
-.dragging {
-  .block-border-wrapper {
-    display: flex !important;
-    border-bottom: transparent;
+.sortable-drag {
+  opacity: 0;
+}
+
+.dragging-block {
+  .block {
+    &:hover,
+    &.selected {
+      > .border-wrapper {
+        display: none;
+      }
+    }
   }
-  .element-border-wrapper {
-    display: flex !important;
+}
+
+.dragging-element {
+  .block {
+    > .border-wrapper {
+      display: flex;
+    }
   }
 }
 </style>
